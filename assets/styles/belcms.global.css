@@ -1,0 +1,19 @@
+.bel-cms-widgets {
+	display: block;
+	overflow: hidden;
+	width: 100%;
+}
+.bel-cms-widgets-title {
+	padding: .75rem 1.25rem;
+	margin-bottom: 0;
+	background-color: rgba(0,0,0,.03);
+	border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.bel-cms-widgets-title:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+.bel-cms-widgets-content {
+	-ms-flex: 1 1 auto;
+	flex: 1 1 auto;
+	padding: 1.25rem;
+}

@@ -13,3 +13,22 @@ if (!defined('CHECK_INDEX')) {
 	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
 	exit(ERROR_INDEX);
 }
+
+
+final class Access
+{
+	
+	function __construct()
+	{
+	}
+
+	public static function Get ()
+	{
+		return false;
+	}
+
+	public static function isLogged ()
+	{
+		return true;
+	}
+}

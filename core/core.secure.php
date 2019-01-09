@@ -16,5 +16,25 @@ if (!defined('CHECK_INDEX')) {
 
 final class Secures
 {
+	public static function getAccessPage ($page = null) {
+		if ($page === null) {
+			return true;
+		} else {
+			return self::accessBDD();
+		}
+	}
 
+	public static function accessBDD ()
+	{
+		$sql = New BDD();
+		$sql->table('TABLE_PAGES_CONFIG');
+		$sql->queryAll();
+		if (empty($sql->data)) {
+			$return = false;
+		} else {
+			$return = $sql->data;
+		}
+
+		return $return;
+	}
 }

@@ -51,7 +51,7 @@ final class Template  extends Dispatcher
 		self::assembly ();
 	}
 
-	private function fullPage ()
+	public function fullPage ()
 	{
 		$tpl_full = explode(',', constant('CMS_TPL_FULL'));
 
@@ -186,22 +186,6 @@ final class Template  extends Dispatcher
 		return $footer;
 	}
 	#########################################
-	# Récupère le widgets haut 
-	#########################################
-	private function widgetsTopBuffer ()
-	{
-		ob_start();
-		if (is_file($this->dirTpl.'widgets.top.tpl')) {
-			require $this->dirTpl.'widgets.top.tpl';
-			$widgets = null;
-			$widgetsTop = ob_get_contents ();
-		}
-		if (ob_get_length () != 0) {
-			ob_end_clean ();
-		}
-		return $widgetsTop;
-	}
-	#########################################
 	# Gestions des styles (css)
 	#########################################
 	public function cascadingStyleSheets ()
@@ -237,17 +221,19 @@ final class Template  extends Dispatcher
 		$return         = '';
 
 		$files[] = 'assets/plugins/jquery-3.3.1/jquery-3.3.1.min.js';
-		$files[] = 'assets/plugins/belcms.core.js';
+		$files[] = 'assets/plugins/tinymce/tinymce.min.js';
 		/* BOOTSTRAP 4.1.3 */
 		$files[] = 'assets/plugins/bootstrap-4.1.3/js/popper.min.js';
 		$files[] = 'assets/plugins/bootstrap-4.1.3/js/bootstrap.min.js';
+		/* FILE GENERAL BEL-CMS */
+		$files[] = 'assets/plugins/belcms.core.js';
 
 		if (is_file(ROOT.'pages'.DS.$this->controller.DS.'js'.DS.'javascripts.js')) {
 			$files[] = 'pages'.DS.$this->controller.DS.'js'.DS.'javascripts.js';
 		}
 
 		foreach ($files as $v) {
-			$return .= '	<script type="text/javascript" src="'.$v.'"></script>'.PHP_EOL;
+			$return .= '	<script type="text/javascript" src="'.$v.'?x='.rand(0,100).'"></script>'.PHP_EOL;
 		}
 		return trim($return);
 	}

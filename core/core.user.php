@@ -118,4 +118,15 @@ class Users
 	{
 		
 	}
+#########################################
+# Logout
+#########################################
+	public static function logout()
+	{
+		unset($_SESSION['USER']);
+		setcookie('BEL-CMS-COOKIE', NULL, -1, '/');
+		$return['msg']  = 'Votre session est vos cookie de ce site sont effacés';
+		$return['type'] = 'success';
+		return $return;
+	}
 }

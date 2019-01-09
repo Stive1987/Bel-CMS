@@ -126,10 +126,10 @@ class Pages
 		ob_end_clean();
 	}
 
-	function error ($title, $msg)
+	function error ($title, $msg, $type)
 	{
 		ob_start();
-		Notification::error($msg, $title);
+		Notification::$type($msg, $title);
 		$this->page = ob_get_contents();
 		ob_end_clean();
 	}

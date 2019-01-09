@@ -165,7 +165,7 @@ class Widgets
 			}
 		}
 
-		$title = $title;
+		$title   = $title;
 		$content = $widgets[$title];
 		require $dir;
 

@@ -1,0 +1,126 @@
+/*###################################
+# BEL-CMS MODULE USER # MAIN
+###################################*/
+section#bel_cms_page_user {
+	display: block;
+	overflow: hidden;
+	width: 100%;
+}
+	#bel_cms_page_user ul {
+		margin-bottom: 15px;
+	}
+	section#bel_cms_page_user .logout {
+		display: block;
+		float: right;
+		color: red;
+	}
+	section#bel_cms_page_user > .card {
+		margin-bottom: 15px;
+	}
+		#bel_cms_page_user_main_avatar {
+			width: 210px;
+			float: left;
+		}
+			#bel_cms_page_user_main_avatar > img {
+				display: block;
+				width: 180px;
+				height: 180px;
+			}
+		#bel_cms_page_user_main_infos {
+			width: calc(100% - 210px);
+			float: left;
+			border-left: 1px solid #dfdfdf;
+		}
+		#bel_cms_page_user_main_infos ul li span:first-child {
+			display: block;
+			float: left;
+			text-align: right;
+			padding: 0 15px;
+			width: 200px;
+			text-transform: uppercase;
+		}
+		#bel_cms_page_user_main_infos ul li span:last-child {
+			width: calc(100% - 200px);
+			display: block;
+			float: left;
+			font-weight: bold;
+		}
+
+		@media (max-width: 765px) {
+			#bel_cms_page_user_main_avatar {
+				display: none;
+			}
+			#bel_cms_page_user_main_infos {
+				width: 100%;
+				float: none;
+				border-left: none;
+			}
+		}
+	#bel_cms_user_ul_avatar {
+		display: block;
+		list-style: none;
+		margin: 0; padding: 0 15px;
+		overflow: hidden;
+	}
+		#bel_cms_user_ul_avatar li {
+			display: block;
+			float: left;
+			width: 125px;
+			height: 125px;
+			padding: 0 5px;
+			margin-bottom: 10px;
+		}
+			#bel_cms_user_ul_avatar li a {
+				display: block;
+				position: relative;
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
+				#bel_cms_user_ul_avatar li a img {
+					display: block;
+					margin: auto;
+					height: 100%;
+					width: 100%;
+					border: none;
+					-webkit-transition: all 125ms linear;
+					   -moz-transition: all 125ms linear;
+					    -ms-transition: all 125ms linear;
+					     -o-transition: all 125ms linear;
+					        transition: all 125ms linear;
+				}
+				#bel_cms_user_ul_avatar li a span {
+					display: block;
+					width: 100%;
+					left: 0;
+					position: absolute;
+					bottom: -20px;
+					line-height: 20px;
+					text-align: center;
+					background: rgba(0, 0, 0, .8);
+					color: #F6F6F6;
+					-webkit-transition: all 125ms linear;
+					   -moz-transition: all 125ms linear;
+					    -ms-transition: all 125ms linear;
+					     -o-transition: all 125ms linear;
+					        transition: all 125ms linear;
+				}
+				#bel_cms_user_ul_avatar li a:hover img {
+					opacity: 0.7;
+					box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
+					-webkit-filter: blur(2px);
+					   -moz-filter: blur(2px);
+					     -o-filter: blur(2px);
+					    -ms-filter: blur(2px);
+					        filter: blur(2px);
+				}
+				#bel_cms_user_ul_avatar li a:hover span {
+					bottom: 0;
+				}
+/*###################################
+# BEL-CMS MODULE USER # SEND
+###################################*/
+#bel_cms_user_send {
+	padding: 25px;
+	margin: auto;
+}

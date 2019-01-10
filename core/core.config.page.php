@@ -67,23 +67,15 @@ class Pages
 	}
 
 	function render($filename) {
-		/*
-		if (defined('MANAGEMENT')) {
-			if (SecureAccess::AccessManagement(strtolower(get_class($this))) === false) {
-				self::error(ERROR, NO_ACCESS_GROUP_PAGE, 'danger');
-				return false;
-			}
-		} else {
-			if (SecureAccess::ActivePage(strtolower(get_class($this))) === false) {
-				self::error(ERROR, NO_ACCESS_PAGE, 'info');
-				return false;
-			}
-			if (SecureAccess::AccessPage(strtolower(get_class($this))) === false) {
-				self::error(ERROR, NO_ACCESS_GROUP_PAGE, 'danger');
-				return false;
-			}
+		if (Secures::getAccessPage(strtolower(get_class($this))) === false) {
+			self::error('Page', NO_ACCESS_GROUP_PAGE, 'warning');
+			return false;
 		}
-		*/
+
+		if (Secures::getPageActive(strtolower(get_class($this))) === false) {
+			self::error('Page', NO_ACCESS_PAGE, 'warning');
+			return false;
+		}
 		extract($this->vars);
 		ob_start();
 

@@ -68,7 +68,7 @@ class Pages
 
 	function render($filename) {
 		if (Secures::getAccessPage(strtolower(get_class($this))) === false) {
-			self::error('Page', NO_ACCESS_GROUP_PAGE, 'warning');
+			self::error('Page', NO_ACCESS_GROUP_PAGE, 'infos');
 			return false;
 		}
 

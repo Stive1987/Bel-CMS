@@ -61,9 +61,9 @@ final class Template  extends Dispatcher
 
 		if (in_array($this->controller, $tplfull)) {
 			return true;
-			if (in_array($this->view, $tplfull)) {
-				return true;
-			}
+		}
+		if (in_array($this->view, $tplfull)) {
+			return true;
 		}
 	}
 

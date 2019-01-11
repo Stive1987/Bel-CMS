@@ -29,9 +29,13 @@ final class Secures
 				return true;
 			} else {
 				foreach ($bdd[$page]->access_groups as $k => $v) {
-					if (in_array($v, self::accessSqlUser()[$_SESSION['USER']['HASH_KEY']]->access)) {
-						return true;
-						break;
+					if (isset($_SESSION['USER']['HASH_KEY']->access) && !empty($_SESSION['USER']['HASH_KEY']->access)) {
+						if (in_array($v, self::accessSqlUser()[$_SESSION['USER']['HASH_KEY']]->access)) {
+							return true;
+							break;
+						} else {
+							return false;
+						}
 					} else {
 						return false;
 					}

@@ -17,7 +17,7 @@ class Users
 {
 	function __construct ()
 	{
-		//debug($_SESSION);
+		self::autoLogin();
 	}
 	#########################################
 	# is logged true or false
@@ -114,9 +114,28 @@ class Users
 	#########################################
 	# Get infos user by id
 	#########################################
-	public static function getInfosUser($hash_key = false, $name = false)
+	public static function getInfosUser($hash_key = null)
 	{
-		
+		if ($hash_key !== null && strlen($hash_key) == 32) {
+			$sql = New BDD();
+			$sql->table('TABLE_USERS');
+			$sql->where(array(
+				'name'  => 'hash_key',
+				'value' => $hash_key
+			));
+			$sql->queryOne();
+
+			foreach ($sql->data as $k => $v) {
+				//$return[$v->hash_key] = $v;
+			}
+			$return[$sql->data->hash_key] = $sql->data;
+			unset($return[$sql->data->hash_key]->password, $return[$sql->data->hash_key]->hash_key);
+		} else {
+			return (object) array();
+		}
+
+		return $return;
+
 	}
 #########################################
 # Logout

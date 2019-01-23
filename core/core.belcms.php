@@ -30,7 +30,10 @@ final class BelCMS extends Dispatcher
 	{
 		ob_start();
 
-		if ($this->IsEcho === true) {
+		if ($this->isManagement === true) {
+			require_once MANAGEMENTS.'managements.php';
+			new Managements;
+		} else if ($this->IsEcho === true) {
 			$assemblyPage = new AssemblyPages ();
 			$assemblyPage->getRender ();
 			echo $assemblyPage->render;

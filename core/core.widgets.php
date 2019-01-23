@@ -34,9 +34,18 @@ class Widgets
 
 	public function render ($filename)
 	{
+		$str = str_replace('Widget', '', get_class($this));
+
+		if (Secures::getwidgetsActive(strtolower($str)) === false) {
+			Notification::warning('Page', NO_ACCESS_PAGE);
+			return false;
+		}
+		if (Secures::getAccessWidgets(strtolower($str)) === false) {
+			Notification::infos('Page', NO_ACCESS_GROUP_PAGE);
+		}
+
 		extract($this->vars);
 		ob_start();
-		$str = str_replace('Widget', '', get_class($this));
 		$dir = DIR_WIDGETS.strtolower($str).DS.$filename.'.php';
 		if (is_file($dir)) {
 			include $dir;
@@ -71,7 +80,7 @@ class Widgets
 		if ($pos !== null) {
 			$sql = New BDD();
 			$sql->table('TABLE_WIDGETS');
-			$where[] = array('name' => 'activate', 'value' => 1);
+			$where[] = array('name' => 'active', 'value' => 1);
 			$where[] = array('name' => 'pos', 'value' => $pos);
 			$sql->where($where);
 			$sql->orderby(array('name' => 'orderby', 'value' => 'ASC'));

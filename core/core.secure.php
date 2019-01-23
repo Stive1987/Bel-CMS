@@ -29,8 +29,38 @@ final class Secures
 				return true;
 			} else {
 				foreach ($bdd[$page]->access_groups as $k => $v) {
-					if (isset($_SESSION['USER']['HASH_KEY']->access) && !empty($_SESSION['USER']['HASH_KEY']->access)) {
-						if (in_array($v, self::accessSqlUser()[$_SESSION['USER']['HASH_KEY']]->access)) {
+					if (isset($_SESSION['USER']['HASH_KEY']->access) && strlen($_SESSION['USER']['HASH_KEY']->access) == 32) {
+						if (in_array($v, self::accessSqlUser())) {
+							return true;
+							break;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				}
+			}
+		}
+	}
+	#########################################
+	# Accès au widgets via les groupes
+	#########################################
+	public static function getAccessWidgets ($Widget = null)
+	{
+		if ($Widget === null) {
+			return false;
+		} else {
+			$bdd = self::accessSqlWidget($Widget);
+			if (in_array(0, $bdd[$Widget]->groups_access)) {
+				return true;
+			} else {
+				foreach ($bdd[$Widget]->groups_access as $k => $v) {
+					$user = self::accessSqlUser();
+					$user = $user[$_SESSION['USER']['HASH_KEY']];
+					$access = $user->access;
+					if (isset($_SESSION['USER']['HASH_KEY']) && strlen($_SESSION['USER']['HASH_KEY']) == 32) {
+						if (in_array($v, $access)) {
 							return true;
 							break;
 						} else {
@@ -50,6 +80,18 @@ final class Secures
 	{
 		$bdd = self::accessSqlPages($page);
 		if ($bdd[$page]->active == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	#########################################
+	# Accès aux widgets si activer
+	#########################################
+	public static function getwidgetsActive ($widgets) 
+	{
+		$bdd = self::accessSqlWidget($widgets);
+		if ($bdd[$widgets]->active == 1) {
 			return true;
 		} else {
 			return false;
@@ -83,6 +125,28 @@ final class Secures
 		return $return;
 	}
 	#########################################
+	# BDD Complet du widget demandé
+	#########################################
+	public static function accessSqlWidget ($name)
+	{
+		$sql = New BDD();
+		$sql->table('TABLE_WIDGETS');
+		$sql->where(array('name' => 'name', 'value' => $name));
+		$sql->queryAll();
+		if (empty($sql->data)) {
+			$return = false;
+		} else {
+			$return = $sql->data;
+			foreach ($return as $k => $v) {
+				$return[$v->name] = $v;
+				$return[$v->name]->groups_access = explode('|', $return[$v->name]->groups_access);
+				$return[$v->name]->groups_admin  = explode('|', $return[$v->name]->groups_admin);
+				unset($return[$k], $return[$v->name]->name);
+			}
+		}
+		return $return;
+	}
+	#########################################
 	# Accès uniquement aux groupes et au 
 	# groupe principal (assemblé) 
 	# securisé par le hash_key
@@ -91,7 +155,7 @@ final class Secures
 	{
 		$return = false;
 
-		if (isset($_SESSION['USER']['HASH_KEY']) and !empty($_SESSION['USER']['HASH_KEY'])) {
+		if (isset($_SESSION['USER']['HASH_KEY']) and strlen($_SESSION['USER']['HASH_KEY']) == 32) {
 			$sql = New BDD();
 			$sql->table('TABLE_USERS');
 			$sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']['HASH_KEY']));

@@ -98,4 +98,22 @@ final class Comment extends Dispatcher
 
 		echo $html;
 	}
+
+	public static function countComments($page, $page_id)
+	{
+		$sql = New BDD;
+		$sql->table('TABLE_COMMENTS');
+		$where[] = array(
+					'name'  => 'page_id',
+					'value' => (int) $page_id
+				);
+		$where[] = array(
+					'name'  => 'page',
+					'value' => $page
+				);
+		$sql->where($where);
+		$sql->count();
+
+		return $sql->data;
+	}
 }

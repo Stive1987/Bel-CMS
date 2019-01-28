@@ -110,3 +110,69 @@ body#LoginForm {
 .back a {
 	color: #444444; font-size: 13px;text-decoration: none;
 }
+
+#login-management {
+	position: relative;
+}
+#loading {
+	display: none;
+	background-color: rgba(0, 0, 0, .75);
+	height: 50px;
+	top: calc( 50% - 50px);
+	width: 90%;
+	left: 5%;
+	position: absolute;
+	-webkit-border-radius: 20px;
+	   -moz-border-radius: 20px;
+	        border-radius: 20px;
+	opacity: 0;
+}
+#loading span {
+	color: rgba(255, 255, 255, 1);
+	display: block;
+	float: left;
+	line-height: 50px;
+	text-transform: uppercase;
+	font-size: 16px;
+}
+#loadspinner {
+	display: block;
+	float: left;
+	margin-right: 15px;
+	width: 30px;
+	height: 30px;
+	line-height: 39px;
+	margin-top: 11px;
+	margin-left: 11px;
+    -webkit-animation-name: loadspinner;
+    -webkit-animation-duration: 1000ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: loadspinner;
+    -moz-animation-duration: 2000ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -ms-animation-name: loadspinner;
+    -ms-animation-duration: 2000ms;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-timing-function: linear;
+    
+    animation-name: loadspinner;
+    animation-duration: 2000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+}
+
+@-moz-keyframes loadspinner {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes loadspinner {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes loadspinner {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}

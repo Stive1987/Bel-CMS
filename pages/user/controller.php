@@ -25,7 +25,7 @@ class User extends Pages
 			$d = array();
 			$d['user'] = $this->ModelsUser->getDataUser($_SESSION['USER']['HASH_KEY']);
 			$this->set($d);
-			$this->render('profil');
+			$this->render('index');
 		} else {
 			$this->redirect('User/login&echo', 3);
 			Notification::warning(LOGIN_REQUIRE);
@@ -84,56 +84,6 @@ class User extends Pages
 				$this->error('Password', $return['msg'], $return['type']);
 			}
 	}
-	public function send ()
-	{
-			if ($this->data['send'] == 'register') {
-				self::sendRegister();
-			} else if ($this->data['send'] == 'login') {
-				self::sendLogin();
-			} else if ($this->data['send'] == 'mailpassword') {
-				self::mailpassword();
-			} else if ($this->data['send'] == 'editsocial') {
-				self::editsocial();
-			} else if ($this->data['send'] == 'editprofile') {
-				self::editprofil();
-			} else if ($this->data['send'] == 'lostpassword') {
-				self::sendLostPassword();
-			} else if ($this->data['send'] == 'sendavatar') {
-				self::sendAvatar();
-			} else if ($this->data['send'] == 'changeavatar') {
-				self::changeAvatar();
-			} else if ($this->data['send'] == 'deleteavatar') {
-				self::deleteAvatar();
-			} else {
-				$this->redirect('user', 3);
-			}
-	}
-	private function sendAvatar ()
-	{
-			$return = $this->ModelsUser->sendAvatarUpload();
-			if ($return['type'] == 'success') {
-				Notification::success($return['msg']);
-				$this->redirect('user', 3);
-			} else {
-				Notification::error($return['msg']);
-				$this->redirect('user', 3);
-			}
-	}
-	private function changeAvatar ()
-	{
-			unset($_REQUEST['send']);
-			$return = $this->ModelsUser->sendChangeAvatar($_REQUEST['value']);
-			$this->jquery = array('type' => $return['type'], 'text' => $return['msg'] );
-			$this->redirect('user', 3);
-	}
-
-	private function deleteAvatar ()
-	{
-			unset($_REQUEST['send']);
-			$return = $this->ModelsUser->sendDeleteAvatar($_REQUEST['value']);
-			$this->error('Delete Avatar', $return['msg'], $return['type']);
-			$this->redirect('user', 3);
-	}
 
 	private function sendRegister ()
 	{
@@ -167,7 +117,7 @@ class User extends Pages
 			}
 		}
 	}
-	private function sendLogin ()
+	public function sendLogin ()
 	{
 			if (empty($this->data)){
 				$this->error(ERROR, 'Field Empty', 'error');
@@ -190,41 +140,18 @@ class User extends Pages
 				}
 			}
 	}
-	private function editprofil ()
-	{
-			if (empty($this->data)) {
-				$this->error(ERROR, 'Field Empty');
-				$this->redirect('user/login', 3);
-			} else {
-				unset($this->data['send']);
-				$return = $this->ModelsUser->sendEditProfil($this->data);
-				$this->error('Edition Profile Information', $return['msg'], $return['type']);
-				$this->redirect('User', 3);
-			}
-	}
-	private function editsocial ()
-	{
-			if (empty($this->data)) {
-				$this->error(ERROR, 'Field Empty');
-				$this->redirect('user/login', 3);
-			} else {
-				unset($this->data['send']);
-				$return = $this->ModelsUser->sendEditSocial($this->data);
-				$this->error('Edit social media', $return['msg'], $return['type']);
-				$this->redirect('User', 3);
-			}
-	}
+
 	private function mailpassword ()
 	{
-			if (empty($this->data)) {
-				$this->error(ERROR, 'Field Empty');
-				$this->redirect('user/login', 3);
-			} else {
-				unset($this->data['send']);
-				$return = $this->ModelsUser->sendEditPassword($this->data);
-				$this->error('Edit mail & password', $return['msg'], $return['type']);
-				$this->redirect('User', 2);
-			}
+		if (empty($this->data)) {
+			$this->error(ERROR, 'Field Empty');
+			$this->redirect('user/login', 3);
+		} else {
+			unset($this->data['send']);
+			$return = $this->ModelsUser->sendEditPassword($this->data);
+			$this->error('Edit mail & password', $return['msg'], $return['type']);
+			$this->redirect('User', 2);
+		}
 	}
 	public function GetUser($usermail = null, $userpass = null, $api_key = null)
 	{
@@ -237,5 +164,41 @@ class User extends Pages
 		} else {
 			$this->json = null;
 		}
+	}
+	#########################################
+	# Enregistre le compte utilisateur
+	#########################################
+	public function sendaccount ()
+	{
+		$return = $this->ModelsUser->sendAccount($this->data);
+		$this->error($return['title'], $return['msg'], $return['type']);
+		$this->redirect('User', 2);
+	}
+	#########################################
+	# Enregistre le compte securiter (mdp)
+	#########################################
+	public function sendsecurity ()
+	{
+		$return = $this->ModelsUser->sendSecurity($this->data);
+		$this->error($return['title'], $return['msg'], $return['type']);
+		$this->redirect('User', 2);
+	}
+	#########################################
+	# Selectionne l'avatar ou le supprime
+	#########################################
+	public function avatarsubmit ()
+	{
+		$return = $this->ModelsUser->avatarSubmit($this->data);
+		$this->error($return['ext'], $return['msg'], $return['type']);
+		$this->redirect('User', 2);
+	}
+	#########################################
+	# Enregistre le nouveau avatar (upload)
+	#########################################
+	public function newavatar ()
+	{
+		$return = $this->ModelsUser->sendNewAvatar($this->data);
+		$this->error($return['ext'], $return['msg'], $return['type']);
+		$this->redirect('User', 2);
 	}
 }

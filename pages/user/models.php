@@ -435,7 +435,7 @@ class ModelsUser
 
 		$sql = New BDD();
 		$sql->table('TABLE_USERS_PROFILS');
-		$sql->where(array('name'=>'hash_key','value'=>$_SESSION['USER']['HASH_KEY']));
+		$sql->where(array('name'=>'hash_key','value'=> $_SESSION['USER']['HASH_KEY']));
 		$sql->sqlData($insertProfil);
 		$sql->update();
 		$countRowUpdate = $sql->rowCount;
@@ -576,32 +576,6 @@ class ModelsUser
 		}
 
 		return $return;
-	}
-	public function sendAvatarUpload ()
-	{
-		if (!empty($_FILES['avatar'])) {
-			$dir = 'uploads/users/'.$_SESSION['USER']['HASH_KEY'].'/';
-			if (is_file($dir)) {
-				 mkdir ($dir,0700);
-			}
-			$extensions = array('.png', '.gif', '.jpg', '.jpeg');
-			$extension = strrchr($_FILES['avatar']['name'], '.');
-			if (!in_array($extension, $extensions)) {
-				$return['msg']  = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg';
-				$return['type'] = 'error';
-			} else if (move_uploaded_file($_FILES['avatar']['tmp_name'], $dir.$_FILES['avatar']['name'])) {
-				$return['msg']  = 'Upload effectué avec succès';
-				$return['type'] = 'success';
-			} else {
-				$return['msg']  = 'Echec de l\'upload !';
-				$return['type'] = 'warning';
-			}
-		} else {
-			$return['msg']  = 'Aucun upload d\'image en cours...';
-			$return['type'] = 'error';
-		}
-		return $return;
-
 	}
 	public function sendChangeAvatar ($data = false)
 	{
@@ -886,6 +860,9 @@ class ModelsUser
 
 		return $return;
 	}
+	#########################################
+	# Ajoute une visite
+	#########################################
 	private function addLastVisit ($hash_key = null)
 	{
 		if (strlen($hash_key) == 32) {
@@ -895,5 +872,199 @@ class ModelsUser
 			$sql->sqlData(array('last_visit' => date('Y-m-d H:i:s'), 'ip' => Common::GetIp()));
 			$sql->update();
 		}
+	}
+	#########################################
+	# Enregistre les parametres du compte 
+	#########################################
+	public function sendAccount ($data)
+	{
+		if (!empty($data)) {
+			if (strlen($_SESSION['USER']['HASH_KEY']) == 32) {
+				$sql = New BDD();
+				$sql->table('TABLE_USERS');
+				$sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']['HASH_KEY']));
+				$sql->queryOne();
+				$dataUser = $sql->data;
+				if (empty($sql->data)) {
+					$return = array('type' => 'warning', 'msg' => 'Erreur de données utilisateur', 'title' => 'Données');
+					return $return;
+				} else {
+					if ($dataUser->hash_key != $_SESSION['USER']['HASH_KEY']) {
+						$return = array('type' => 'error', 'msg' => 'La hash key ne vous appartient pas', 'title' => 'Hash Key');
+						// TODO : faire un systeme de prévention 
+						return $return;
+					} else {
+
+						if ($data['username'] != $dataUser->username) {
+							$sql = New BDD();
+							$sql->table('TABLE_USERS');
+							$sql->where(array('name' => 'username', 'value' => $data['username']));
+							$sql->count();
+							if ($sql->data == 1) {
+								$return = array('type' => 'error', 'msg' => 'Ce nom d\'utilisateur est déjà utilisé', 'title' => 'Pseudo');
+								return $return;	
+							} else {
+								$dataInsert['username'] = $data['username'];
+							}
+						}
+
+						if ($data['mail'] != $dataUser->email) {
+							$sql = New BDD();
+							$sql->table('TABLE_USERS');
+							$sql->where(array('name' => 'email', 'value' => $data['mail']));
+							$sql->count();
+							if ($sql->data == 1) {
+								$return = array('type' => 'error', 'msg' => 'Cette email priver est déjà utilisé', 'title' => 'Email');
+								return $return;	
+							} else {
+								$dataInsert['email'] = $data['mail'];
+							}
+						}
+
+						if (!empty($dataInsert)) {
+							$sql = New BDD();
+							$sql->table('TABLE_USERS');
+							$sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']['HASH_KEY']));
+							$sql->sqlData($dataInsert);
+							$sql->update();
+						}
+
+						$dataInsertProfils['birthday'] = $data['birthday'];
+						$dataInsertProfils['country']  = Secure::isString($data['country']);
+						$dataInsertProfils['websites'] = Secure::isUrl($data['websites']);
+						$dataInsertProfils['gender']   = Secure::isString($data['gender']);
+
+						$sql = New BDD();
+						$sql->table('TABLE_USERS_PROFILS');
+						$sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']['HASH_KEY']));
+						$sql->sqlData($dataInsertProfils);
+						$sql->update();
+
+						$return = array('type' => 'success', 'msg' => 'Tout les paramètre, on été enregistré', 'title' => 'Profil');
+						return $return;
+					}
+				}
+			} else {
+
+				$return = array('type' => 'error', 'msg' => 'Erreur de Key', 'title' => 'Profil');
+				return $return;
+			}
+		} else {
+			$return = array('type' => 'error', 'msg' => 'Aucune données', 'title' => 'Profil');
+			return $return;
+		}
+	}
+	#########################################
+	# Enregistre un nouveau mot de passe
+	#########################################
+	public function sendSecurity ($data)
+	{
+		$sql = New BDD();
+		$sql->table('TABLE_USERS');
+		$sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']['HASH_KEY']));
+		$sql->queryOne();
+		$results = $sql->data;
+		if (password_verify($data['password_old'], $results->password)) {
+			$insert['password'] = password_hash($data['password_new'], PASSWORD_DEFAULT);
+			$sql = New BDD();
+			$sql->table('TABLE_USERS');
+			$sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']['HASH_KEY']));
+			$sql->sqlData($insert);
+			$sql->update();
+
+			setcookie('BEL-CMS-COOKIE', NULL, -1, '/');
+			$setcookie = $results->username.'###'.$_SESSION['USER']['HASH_KEY'].'###'.date('Y-m-d H:i:s').'###'.$insert['password'];
+			setcookie('BEL-CMS-COOKIE', $setcookie, time()+60*60*24*30, '/');
+
+			$return = array('type' => 'success', 'msg' => 'Le mot de passe a été enregistré', 'title' => 'Mot de passe');
+			return $return;
+		} else {
+			$return = array('type' => 'error', 'msg' => 'L\'ancien mot de passe de conrespond pas', 'title' => 'Mot de passe');
+			return $return;
+		}
+	}
+	#########################################
+	# Enregistre le nouveau avatar (upload)
+	#########################################
+	public function sendNewAvatar ($data)
+	{
+		if (!empty($_FILES['avatar'])) {
+			$dir = 'uploads/users/'.$_SESSION['USER']['HASH_KEY'].'/';
+			if (is_file($dir)) {
+				 mkdir ($dir,0700);
+			}
+			$extensions = array('.png', '.gif', '.jpg', '.jpeg');
+			$extension = strrchr($_FILES['avatar']['name'], '.');
+			if (!in_array($extension, $extensions)) {
+				$return['msg']  = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg';
+				$return['type'] = 'error';
+				$return['ext']  = 'Extention';
+ 			} else if (move_uploaded_file($_FILES['avatar']['tmp_name'], $dir.$_FILES['avatar']['name'])) {
+				$return['msg']  = 'Upload effectué avec succès';
+				$return['type'] = 'success';
+				$return['ext']  = 'Avatar';
+			} else {
+				$return['msg']  = 'Echec de l\'upload !';
+				$return['type'] = 'warning';
+				$return['ext']  = 'Erreur inconnu';
+			}
+		} else {
+			$return['msg']  = 'Aucun upload d\'image en cours...';
+			$return['type'] = 'error';
+			$return['ext']  = 'Aucune image';
+		}
+		return $return;
+	}
+
+	public function avatarSubmit ($data)
+	{
+		if ($data['select'] == 'select') {
+			if ($data['avatar']) {
+				$ext = new SplFileInfo($data['avatar']);
+				$extensions = array('png', 'gif', 'jpg', 'jpeg');
+				if (in_array($ext->getExtension(), $extensions)) {
+					$sql = New BDD();
+					$sql->table('TABLE_USERS');
+					$sql->where(array('name'=>'hash_key','value'=>$_SESSION['USER']['HASH_KEY']));
+					$sql->sqlData(array('avatar'=> $data['avatar']));
+					$sql->update();
+
+					$return['msg']  = 'Avatar changer avec succès';
+					$return['type'] = 'success';
+					$return['ext']  = 'Avatar';
+				} else {
+					$return['msg']  = 'mavaise extention de l\'avatar';
+					$return['type'] = 'warning';
+					$return['ext']  = 'Avatar';
+				}
+			} else {
+				$return['msg']  = 'Aucune avatar';
+				$return['type'] = 'warning';
+				$return['ext']  = 'Avatar';
+			}
+		} else if ($data['select'] == 'delete') {
+			$sql = New BDD();
+			$sql->table('TABLE_USERS');
+			$sql->where(array('name'=>'hash_key','value'=>$_SESSION['USER']['HASH_KEY']));
+			$sql->queryOne();
+			$return->$sql->data;
+			if (!empty($return)) {
+				if ($return->avatar == $data['avatar']) {
+					$sql = New BDD();
+					$sql->table('TABLE_USERS');
+					$sql->where(array('name'=>'hash_key','value'=>$_SESSION['USER']['HASH_KEY']));
+					$sql->sqlData(array('avatar'=> ''));
+					$sql->update();
+				}
+			}
+			$link = DIR_UPLOADS;
+			$link .= $data['avatar'];
+			unlink($link);
+			$return['msg']  = 'Image supprimezr avec succès';
+			$return['type'] = 'success';
+			$return['ext']  = 'Avatar';
+		}
+
+		return $return;
 	}
 }

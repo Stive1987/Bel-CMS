@@ -1,0 +1,84 @@
+.nk-widget-highlighted .nk-widget-title {
+	margin: 0 !important;
+}
+.bel_cms_bg h1,
+.bel_cms_bg h2,
+.bel_cms_bg h3,
+.bel_cms_bg h4,
+.forum-activity h4 {
+	color: #848484;
+}
+.note-toolbar .dropdown-menu,
+.note-toolbar .note-btn,
+.note-editor.note-frame .note-editing-area .note-editable,
+.panel-heading.note-toolbar,
+.bel_cms_bg {
+	background: rgba(255, 255, 255, 1) !important;
+	color: #333;
+}
+.form-control,
+.widgets_top input {
+	border-color: #ccc;
+	color: #333;
+}
+.form-control,
+.form-control.focus, .form-control:focus,
+.widgets_top input:hover {
+	color: #333;
+}
+.main_blog {
+    margin-top: 25px;
+}
+.nk-contacts-icons > li {
+	margin: 3px 2px;
+}
+.nk-post-text iframe,
+.nk-blog-post iframe {
+	width: 100%;
+}
+.nk-post-text iframe {
+	height: 390px;
+}
+.nk-post-text.mt-0 iframe {
+	height: 455px;
+}
+.nk-blockquote {
+	border: none;
+}
+@media only screen and (max-width: 990px) {
+    .nk-post-text.mt-0 iframe
+    .nk-post-text iframe {
+        height: auto;
+    }
+}
+.blockquotecms .nk-blockquote-icon > span {
+    font-size: 0.95rem;
+    white-space: nowrap;
+    padding-left: 25px;
+}
+.blockquotecms .nk-blockquote-icon::after, .blockquotecms .nk-blockquote-icon::before {
+	transform: none;
+}
+.nk-gap {
+	clear: both;
+}
+.nk-post-text img {
+	max-width: 100% !important;
+}
+.tab-content .active {
+	opacity: 1 !important;
+}
+pre{
+    display: block;
+    font-family: monospace;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

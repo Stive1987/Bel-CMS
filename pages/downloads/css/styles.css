@@ -1,0 +1,106 @@
+#bel_cms_downloads_index {
+	display: block;
+}
+	.bel_cms_downloads_index_cat {
+		padding: 11px;
+		border:1px solid #ebebeb;
+		margin-bottom: 11px;
+	}
+		.bel_cms_downloads_index_cat_img {
+			width: 75px;
+			height: 75px;
+			border-right:1px solid #ebebeb;
+			float: left;
+		}
+		 .bel_cms_downloads_index_cat_img img {
+			width: 75px;
+			height: 75px;
+		 }
+		.bel_cms_downloads_index_cat_name {
+			width: calc(100% - 75px);
+			float: left;
+		}
+			.bel_cms_downloads_index_cat_name > div {
+				border-right: 1px solid rgb(235, 235, 235);
+				height: 75px;
+			}
+				.bel_cms_downloads_index_cat_name > div > div {
+					display: block;
+					font-weight: bold;
+					line-height: 20px;
+					margin-top: 15px;
+				}
+			.bel_cms_downloads_index_cat_desc {
+				display: block;
+				font-style: italic;
+				line-height: 20px;
+			}
+
+		#bel_cms_downloads_index_table tr th span,
+		#bel_cms_downloads_index_table tr td span {
+			display: inline-block !important;
+		}
+
+/*########################################
+# Detail
+########################################*/
+#bel_cms_dl_detail_name {
+	text-align: center;
+	font-weight: bold;
+}
+#bel_cms_dl_detail_img {
+	vertical-align: middle;
+	width: 100%;
+	max-height: 100%;
+}
+blockquote{
+	display:block;
+	background: #fff;
+	padding: 15px 20px 15px 45px;
+	margin: 0 0 20px;
+	position: relative;
+	font-family: Georgia, serif;
+	font-size: 14px;
+	line-height: 1.2;
+	color: #666;
+	-moz-box-shadow: 2px 2px 15px #ccc;
+	-webkit-box-shadow: 2px 2px 15px #ccc;
+	box-shadow: 2px 2px 15px #ccc;
+	border-left-style: solid;
+	border-left-width: 15px;
+	border-right-style: solid;
+	border-right-width: 2px;    
+	text-align: justify;
+}
+
+blockquote::before{
+	content: "\201C"; /*Unicode for Left Double Quote*/
+	/*Font*/
+	font-family: Georgia, serif;
+	font-size: 60px;
+	font-weight: bold;
+	color: #999;
+	position: absolute;
+	left: 10px;
+	top:5px;
+}
+blockquote::after{
+	content: "";
+}
+blockquote a{
+	text-decoration: none;
+	background: #eee;
+	cursor: pointer;
+	padding: 0 3px;
+	color: #c76c0c;
+}
+blockquote a:hover{
+	color: #666;
+}
+blockquote em{
+	font-style: italic;
+}
+blockquote.default{ 
+	border-left-color: #656d77;
+	border-right-color: #434a53;
+}

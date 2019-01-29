@@ -1054,37 +1054,79 @@ final class Secure
 {
 	public static function isMail ($data = false)
 	{
-		return filter_var($data, FILTER_VALIDATE_EMAIL) ? $data : false;
+		$return = false;
+		if ($data !== false) {
+			if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
+				$return = true;
+			}
+		}
+		return $return;
 	}
 
 	public static function isBool ($data = false)
 	{
-		return filter_var($data, FILTER_VALIDATE_BOOLEAN) ? $data : false;
+		$return = false;
+		if ($data !== false) {
+			if (filter_var($data, FILTER_VALIDATE_BOOLEAN)) {
+				$return = true;
+			}
+		}
+		return $return;
 	}
 
 	public static function isInt ($data = false)
 	{
-		return filter_var($data, FILTER_VALIDATE_INT) ? $data : false;
+		$return = false;
+		if ($data !== false) {
+			if (filter_var($data, FILTER_VALIDATE_INT)) {
+				$return = true;
+			}
+		}
+		return $return;
 	}
 
 	public static function isfloat ($data = false)
 	{
-		return filter_var($data, FILTER_VALIDATE_FLOAT) ? $data : false;
+		$return = false;
+		if ($data !== false) {
+			if (filter_var($data, FILTER_VALIDATE_FLOAT)) {
+				$return = true;
+			}
+		}
+		return $return;
 	}
 
 	public static function isIp ($data = false)
 	{
-		return filter_var($data, FILTER_VALIDATE_IP) ? $data : false;
+		$return = false;
+		if ($data !== false) {
+			if (filter_var($data, FILTER_VALIDATE_IP)) {
+				$return = true;
+			}
+		}
+		return $return;
 	}
 
 	public static function isUrl ($data = false)
 	{
-		return filter_var($data, FILTER_VALIDATE_URL) ? $data : false;
+		$return = false;
+		if ($data !== false) {
+			if (filter_var($data, FILTER_VALIDATE_URL)) {
+				$return = true;
+			}
+		}
+		return $return;
 	}
 
-	public static function isString($data = false)
+	public function isString($data = false)
 	{
-		return is_string($data) ? $data : false;
+		$return = false;
+		if ($data !== false) {
+			if (is_string($data)) {
+				$return = true;
+			}
+		}
+		return $return;
 	}
 }
 

@@ -1,0 +1,51 @@
+#bel_cms_widgets_user {
+	display: block;
+}
+#have_back {
+	display: block;
+	text-align: center;
+	padding: 5px;
+	border-top: 1px dotted rgba(255, 255, 255, .05);
+	border-bottom: 1px dotted rgba(255, 255, 255, .05);
+	margin-bottom: 10px;
+}
+#new_here {
+	display: block;
+	font-size: 11px;
+	text-align: center;
+	margin:5px auto 0;
+}
+#bel_cms_widgets_user input {
+	color: rgba(255, 255, 255, 1);
+	border-color: rgba(255, 255, 255, .05);
+}
+
+/* LOGUER */
+#bel_cms_widgets_user {
+
+}
+#bel_cms_widgets_user .card-body {
+	padding: 0;
+}
+#bel_cms_widgets_user .card-body img {
+	display: block;
+	margin: 30px auto;
+	width: 150px;
+	height: 150px;
+}
+#bel_cms_widgets_user .list-group li {
+	border-left: 0;
+	border-right: 0;
+}
+#bel_cms_widgets_user .list-group li a {
+	display: block;
+	text-decoration: none;
+}
+
+#bel_cms_widgets_user form {
+	padding: 15px;
+}
+
+#bel_cms_widgets_user .card-body div {
+	margin-bottom: 15px;
+}

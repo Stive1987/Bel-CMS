@@ -113,8 +113,8 @@ class Widgets
 
 	public static function getAllWidgets($pos = null)
 	{
-		$tplWidgets = self::renderExtWidgts($pos);
-		echo $tplWidgets;
+		$renderWidgets = self::renderExtWidgts($pos);
+		echo $renderWidgets;
 	}
 
 	public static function GetWidget($name = null, $pos = null)
@@ -257,10 +257,8 @@ class Widgets
 				}	
 			}
 		}
-		$widgets = ob_get_contents();
-		if (ob_get_length() != 0) {
-			ob_end_clean();
-		}
-		return $widgets;
+		$renderWidgets = ob_get_contents();
+		ob_end_clean();
+		return $renderWidgets;
 	}
 }

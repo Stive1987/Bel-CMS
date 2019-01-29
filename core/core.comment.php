@@ -98,7 +98,6 @@ final class Comment extends Dispatcher
 
 		echo $html;
 	}
-
 	public static function countComments($page, $page_id)
 	{
 		$sql = New BDD;
@@ -113,7 +112,6 @@ final class Comment extends Dispatcher
 				);
 		$sql->where($where);
 		$sql->count();
-
 		return $sql->data;
 	}
 }

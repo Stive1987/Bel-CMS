@@ -1,0 +1,52 @@
+#bel_cms_members_index {
+
+}
+	#bel_cms_members_index > h4 {
+		line-height: 40px;
+	}
+
+	.bel_cms_members_index_table {
+		background: rgba(255, 255, 255, 1);
+    	border: 1px solid #e4e4e4;
+    	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.05);
+    	padding: 10px;
+    	margin-bottom: 15px;
+	}
+	.bel_cms_members_index_table img {
+		width: 20px;
+		height: 20px;
+		vertical-align: middle;
+	}
+
+/*##### VIEW ##### */
+
+#bel_cms_members_view_avatar {
+	padding: 5px;
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.07);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+}
+#bel_cms_members_view_avatar > img {
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+}
+.widget {
+	margin-bottom: 50px;
+}
+.widget.widget-friends ul {
+	display: block;
+	list-style: none;
+	padding: 0;
+}
+.widget.widget-friends ul li {
+	display: inline-block;
+}
+.widget.widget-friends ul li a img {
+	width: 50px;
+	height: 50px;
+}

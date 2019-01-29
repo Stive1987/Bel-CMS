@@ -18,8 +18,9 @@ class ModelsBlog
 {
 	public function GetBlog ($id = false)
 	{
-		if (isset($_SESSION['pages']->blog->config['MAX_BLOG'])) {
-			$nbpp = (int) $_SESSION['pages']->blog->config['MAX_BLOG'];
+		$config = BelCMSConfig::GetConfigPage('blog');
+		if (isset($config->config['MAX_BLOG'])) {
+			$nbpp = (int) $config->config['MAX_BLOG'];
 		} else {
 			$nbpp = (int) 3;
 		}
@@ -60,6 +61,8 @@ class ModelsBlog
 				} else {
 					$sql->data->author = AutoUser::getInfosUser($author);
 				}
+			} else {
+				$sql->data = null;
 			}
 		} else {
 			$sql->orderby(array(array('name' => 'id', 'type' => 'DESC')));

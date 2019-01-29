@@ -1015,7 +1015,9 @@ class ModelsUser
 		}
 		return $return;
 	}
-
+	#########################################
+	# Selectionne l'avatar ou le supprime
+	#########################################
 	public function avatarSubmit ($data)
 	{
 		if ($data['select'] == 'select') {
@@ -1060,9 +1062,36 @@ class ModelsUser
 			$link = DIR_UPLOADS;
 			$link .= $data['avatar'];
 			unlink($link);
-			$return['msg']  = 'Image supprimezr avec succès';
+			$return['msg']  = 'Image supprimer avec succès';
 			$return['type'] = 'success';
 			$return['ext']  = 'Avatar';
+		}
+
+		return $return;
+	}
+	#########################################
+	# Change les liens social
+	#########################################
+	public function sendSubmitSocial ($data)
+	{
+		$update['facebook']   = Secure::isString($data['facebook']);
+		$update['linkedin']   = Secure::isString($data['linkedin']);
+		$update['twitter']    = Secure::isString($data['twitter']);
+		$update['googleplus'] = Secure::isString($data['googleplus']);
+		$update['pinterest']  = Secure::isString($data['pinterest']);
+		if (!empty($data)) {
+			$sql = New BDD();
+			$sql->table('TABLE_USERS_SOCIAL');
+			$sql->sqlData($update);
+			$sql->update();
+
+			$return['msg']  = 'Liens sociaux modifier avec succès';
+			$return['type'] = 'success';
+			$return['ext']  = 'Liens';
+		} else {
+			$return['msg']  = 'Erreur aucune données';
+			$return['type'] = 'warning';
+			$return['ext']  = 'Liens';
 		}
 
 		return $return;

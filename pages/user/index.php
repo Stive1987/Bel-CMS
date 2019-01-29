@@ -301,7 +301,7 @@ function social ($user)
 ?>
 <div class="tab-pane fade" id="v-pills-social" role="tabpanel" aria-labelledby="v-pills-social-tab">
 	<h2>Liens Social</h2>
-	<form>
+	<form action="user/submitsocial" method="post">
 		<div class="form-group row">
 			<label class="col-sm-2 col-form-label"><i class="fab fa-facebook-square"></i> Facebook</label>
 			<div class="col-sm-10">

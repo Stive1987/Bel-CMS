@@ -17,8 +17,7 @@ if (!defined('CHECK_INDEX')) {
 <section id="bel_cms_blog_main">
 <?php
 foreach ($blog as $k => $v):
-///$count_comment = new Comment('count', 'blog','readmore', $v->id);
-//$count_comment = $count_comment->count;
+$countComment = Comment::countComments('blog', $v->id);
 ?>
 <article class="bel_cms_blog">
 	<div class="card">
@@ -34,7 +33,7 @@ foreach ($blog as $k => $v):
 		</div>
 		<div class="card-footer">
 			<ul class="bel_cms_blog_infos">
-				<li><i class="ion-chatbox-working"></i> <?=COMMENTS?></li>
+				<li><i class="ion-chatbox-working"><?=$countComment?></i> <?=COMMENTS?></li>
 				<li><i class="ion-ios-eye"></i> <?=$v->view?> <?=SEEN?></li>
 				<li class="bel_cms_blog_infos_last">
 					<a class="btn btn-primary" href="<?=$v->link?>"><i class="ion-link"></i> <?=READ_MORE?></a>
@@ -45,5 +44,6 @@ foreach ($blog as $k => $v):
 </article>
 <?php
 endforeach;
+echo $pagination;
 ?>
 </section>

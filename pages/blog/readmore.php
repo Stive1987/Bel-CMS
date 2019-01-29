@@ -13,6 +13,7 @@ if (!defined('CHECK_INDEX')) {
 	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
 	exit(ERROR_INDEX);
 }
+$countComment = Comment::countComments('blog', $blog->id);
 ?>
 <article class="bel_cms_blog_readmore">
 	<div class="card">
@@ -28,7 +29,7 @@ if (!defined('CHECK_INDEX')) {
 		</div>
 		<div class="card-footer">
 			<ul class="bel_cms_blog_infos">
-				<li><i class="ion-chatbox-working"></i> 0 <?=COMMENTS?></li>
+				<li><i class="ion-chatbox-working"></i> <?=$countComment?> <?=COMMENTS?></li>
 				<li><i class="ion-ios-eye"></i> <?=$blog->view?> <?=SEEN?></li>
 			</ul>
 		</div>

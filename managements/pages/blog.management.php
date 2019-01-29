@@ -21,7 +21,8 @@ class Blog extends AdminPages
 
 	public function index ()
 	{
-		$data['teste'] = 'test youpi';
+		$data['data'] = $this->ModelsBlog->getAllBlog();
+
 		$this->set($data);
 		$this->render('index');
 	}

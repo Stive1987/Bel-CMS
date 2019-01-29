@@ -15,7 +15,10 @@
 
 		<link href="/managements/assets/waves/waves.min.css" rel="stylesheet">
 		<link href="/managements/assets/uniform/css/default.css" rel="stylesheet">
-		<link href="/managements/assets/switchery/switchery.min.css" rel="stylesheet"/>
+		<link href="/managements/assets/switchery/switchery.min.css" rel="stylesheet">
+		<!-- Data Tables -->
+        <link href="/managements/assets/datatables/css/jquery.datatables.min.css" rel="stylesheet" type="text/css"/>	
+        <link href="/managements/assets/datatables/css/jquery.datatables_themeroller.css" rel="stylesheet" type="text/css"/>	
 		<!-- Theme Styles -->
 		<link href="/managements/assets/metrotheme.min.css" rel="stylesheet">
 		<link href="/managements/assets/nv.d3.min.css" rel="stylesheet"> 
@@ -41,7 +44,7 @@
 					<div class="page-sidebar-menu">
 						<ul class="accordion-menu">
 							<li class="active-page">
-								<a href="index.html">
+								<a href="Dashboard?management">
 									<i class="menu-icon icon-home4"></i><span>Dashboard</span>
 								</a>
 							</li>
@@ -119,9 +122,6 @@
 				</div><!-- /Page Header -->
 				<!-- Page Inner -->
 				<div class="page-inner">
-					<div class="page-title">
-						<h3 class="breadcrumb-header">Blank Page</h3>
-					</div>
 					<div id="main-wrapper">
 						<div class="row">
 							<?php
@@ -130,7 +130,7 @@
 						</div><!-- Row -->
 					</div><!-- Main Wrapper -->
 					<div class="page-footer">
-
+						Propuslé par <a href="https://bel-cms.be">Bel-CMS</a>
 					</div>
 				</div><!-- /Page Inner -->
 
@@ -140,11 +140,12 @@
 		
 		<!-- Javascripts -->
 		<script src="/assets/plugins/jquery-3.3.1/jquery-3.3.1.min.js"></script>
-		<script src="/managements/assets/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+		<script src="/managements/assets/bootstrap-3.3.7/bootstrap.min.js"></script>
 		<script src="/assets/plugins/slimscroll-1.3.8/jquery.slimscroll.min.js"></script>
 		<script src="/managements/assets/waves/waves.min.js"></script>
 		<script src="/managements/assets/uniform/js/jquery.uniform.standalone.js"></script>
 		<script src="/managements/assets/switchery/switchery.min.js"></script>
+		<script src="/managements/assets/datatables/js/jquery.datatables.min.js"></script>
 		<script src="/managements/assets/metrotheme.min.js"></script>
 	</body>
 </html>

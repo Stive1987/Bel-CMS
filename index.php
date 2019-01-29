@@ -52,6 +52,7 @@ define ('DIR_ASSET',ROOT.'assets'.DS);
 define ('DIR_ASSET_TPL',ROOT.'assets'.DS.'tpl'.DS);
 define ('DIR_WIDGETS', ROOT.'widgets'.DS);
 define ('DIR_UPLOADS', ROOT.'uploads'.DS);
+define ('MANAGEMENTS', ROOT.'managements'.DS);
 #########################################
 # require
 #########################################

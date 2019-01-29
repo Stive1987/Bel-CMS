@@ -1,3 +1,8 @@
+.bel_cms_blog .card-body {
+	padding-bottom: 15px;
+}
+
+
 #bel_cms_blog_main iframe,
 #bel_cms_blog_readmore iframe {
 	width: 100% !important;
@@ -39,14 +44,14 @@
 				padding: 0;
 			}
 				.bel_cms_blog_content {
-					padding: 0 20px;
+					padding: 15px 20px;
 					text-align: justify;
 				}
 				.bel_cms_blog_userdate {
 					display: block;
 					padding: 0;
 					overflow: hidden;
-					margin: 10px 0;
+					margin: 0;
 					padding: 0 20px;
 					text-transform: capitalize;
 				}

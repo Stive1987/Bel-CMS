@@ -40,7 +40,8 @@ final class Template  extends Dispatcher
 		$this->js              = self::JavaScript ();
 		$this->breadcrumb      = self::BreadCrumb ();
 		$this->base            = GetHost::getBaseUrl ();
-
+		$this->page            = $this->controller;
+		$this->fullPage        = self::fullPage ();
 
 		if (defined('CMS_TPL_WEBSITE') && !empty(constant('CMS_TPL_WEBSITE')) ) {
 			$this->dirTpl = DIR_TPL.CMS_TPL_WEBSITE.DS;
@@ -76,7 +77,12 @@ final class Template  extends Dispatcher
 		$body          = self::bodyBuffer ();
 		$footer        = self::footerBuffer ();
 
-		echo $head.$header.$body.$footer;
+		$page  = $head;
+		$page .= $header;
+		$page .= $body;
+		$page .= $footer;
+
+		echo $page;
 
 		$this->render = ob_get_contents();
 

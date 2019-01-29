@@ -75,12 +75,12 @@ final class Managements extends Dispatcher
 						}
 					}
 					echo $this->controller->render;
-
 				}
 			} else if ($_REQUEST['widgets'] == true) {
 
 			} else {
-
+				include MANAGEMENTS.'intern'.DS.'dashboard.php';
+				$render = ob_get_contents();
 			}
 		}
 
@@ -143,9 +143,11 @@ final class Managements extends Dispatcher
 		$return = array();
 
 		foreach ($pages as $k => $v) {
-			$return[$k] = str_replace('.management.php', '', $v);
-			$return[$return[$k].'?management&page=true'] = defined(strtoupper($return[$k])) ? constant(strtoupper($return[$k])) : $return[$k];
-			unset($return[$k]);
+			if (strpos($v, '.management.php')) {
+				$return[$k] = str_replace('.management.php', '', $v);
+				$return[$return[$k].'?management&page=true'] = defined(strtoupper($return[$k])) ? constant(strtoupper($return[$k])) : $return[$k];
+				unset($return[$k]);
+			}
 		}
 		return $return;
 	}
@@ -162,7 +164,7 @@ final class Managements extends Dispatcher
 	#########################################
 	private function getPages ()
 	{
-		$scan = Common::ScanFiles(MANAGEMENTS.'pages');
+		$scan = Common::ScanFiles(MANAGEMENTS.'pages', true);
 		return $scan;
 	}
 	#########################################

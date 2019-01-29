@@ -20,6 +20,9 @@
 							<a class="nav-link" href="Downloads">Téléchargements</a>
 						</li>
 						<li class="nav-item">
+							<a class="nav-link" href="User">Utilisateur</a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link" href="mailto:mail@bel-cms.be">Contact</a>
 						</li>
 					</ul>

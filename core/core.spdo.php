@@ -247,6 +247,7 @@ class BDD
 
 		try {
 			$this->cnx->execute($data);
+			//debug($this);
 			self::rowCount();
 			$GLOBALS['REQUEST_SQL']++;
 			$this->lastId = self::lastId();

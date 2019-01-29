@@ -20,7 +20,9 @@ class Blog extends Pages
 
 	function index ()
 	{
-		//$set['pagination'] = $this->pagination($_SESSION['pages']->blog->config['MAX_BLOG'], 'blog', TABLE_PAGES_BLOG);
+
+		$config = BelCMSConfig::GetConfigPage('blog');
+		$set['pagination'] = $this->pagination($config->config['MAX_BLOG'], 'blog', TABLE_PAGES_BLOG);
 		$set['blog'] = $this->ModelsBlog->GetBlog();
 		$this->set($set);
 		$this->render('index');
@@ -30,13 +32,15 @@ class Blog extends Pages
 	{
 		$set = array();
 		$set['blog'] = $this->ModelsBlog->GetBlog($id);
-		if (count($set['blog']) == 0) {
-			$this->error(BLOG, NAME_OF_THE_UNKNOW, 'danger');
+
+		if (!is_object($set['blog']) && $set['blog'] == 0) {
+			$this->error(BLOG, NAME_OF_THE_UNKNOW, 'error');
 			return;
 		} else {
 			$this->ModelsBlog->NewView($id);
 		}
 		$this->set($set);
 		$this->render('readmore');
+
 	}
 }

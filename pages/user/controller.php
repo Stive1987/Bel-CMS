@@ -201,4 +201,13 @@ class User extends Pages
 		$this->error($return['ext'], $return['msg'], $return['type']);
 		$this->redirect('User', 2);
 	}
+	#########################################
+	# Change les liens social
+	#########################################
+	public function submitsocial ()
+	{
+		$return = $this->ModelsUser->sendSubmitSocial($this->data);
+		$this->error($return['ext'], $return['msg'], $return['type']);
+		$this->redirect('User', 2);
+	}
 }

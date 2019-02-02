@@ -13,3 +13,24 @@ if (!defined('CHECK_INDEX')) {
 	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
 	exit(ERROR_INDEX);
 }
+
+class Visitors extends Dispatcher
+{
+
+	private $visitor_user,
+			$visitor_ip,
+			$visitor_browser,
+			$visitor_hour,
+			$visitor_minute,
+			$visitor_date,
+			$visitor_day,
+			$visitor_month,
+			$visitor_year,
+			$visitor_refferer,
+			$visitor_page;
+
+	function __construct()
+	{
+
+	}
+}

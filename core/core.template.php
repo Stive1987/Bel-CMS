@@ -200,7 +200,11 @@ final class Template  extends Dispatcher
 		$files[] = 'assets/plugins/bootstrap-4.1.3/css/bootstrap.min.css';
 		/* FONTAWASOME 5.4.2 ALL */
 		$files[] = 'assets/plugins/fontawesome-5.4.2/css/all.min.css';
-
+		/* WIDGETS STYLE */
+		$widgets = Widgets::getCssStyles ();
+		foreach ($widgets  as $v) {
+			$files[] = $v;
+		}
 		if (is_file(ROOT.'pages'.DS.$this->controller.DS.'css'.DS.'styles.css')) {
 			$files[] = 'pages'.DS.$this->controller.DS.'css'.DS.'styles.css';
 		}
@@ -219,12 +223,18 @@ final class Template  extends Dispatcher
 	{
 		$files          = array();
 		$return         = '';
-
+		/* jQuery 3.3.1 */
 		$files[] = 'assets/plugins/jquery-3.3.1/jquery-3.3.1.min.js';
+		/* Tinymce */
 		$files[] = 'assets/plugins/tinymce/tinymce.min.js';
 		/* BOOTSTRAP 4.1.3 */
 		$files[] = 'assets/plugins/bootstrap-4.1.3/js/popper.min.js';
 		$files[] = 'assets/plugins/bootstrap-4.1.3/js/bootstrap.min.js';
+		/* WIDGETS Javascript (jquery) */
+		$widgets = Widgets::getJsJavascript ();
+		foreach ($widgets  as $v) {
+			$files[] = $v;
+		}
 		/* FILE GENERAL BEL-CMS */
 		$files[] = 'assets/plugins/belcms.core.js';
 

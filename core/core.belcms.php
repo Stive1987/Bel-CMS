@@ -22,6 +22,9 @@ final class BelCMS extends Dispatcher
 	{
 		parent::__construct();
 
+		if ($this->controller !== 'shoutbox') {
+			new Visitors;
+		}
 		new BelCMSConfig;
 		new Users;
 	}

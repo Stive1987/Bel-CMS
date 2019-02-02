@@ -179,5 +179,25 @@ final class Secures
 
 		return $return;
 	}
+	#########################################
+	# retourne tout les groupes
+	# et possible de retourné un seul
+	#########################################
+	public static function getGroups ($group = null)
+	{
+		$sql = New BDD;
+		$sql->table('TABLE_GROUPS');
+		$sql->fields(array('name', 'id_group'));
+		$sql->queryAll();
+		$data = $sql->data;
 
+		if ($group != null) {
+			return $return[$group];
+		} else {
+			foreach ($data as $k => $v) {
+				$return[$v->id_group] = $v->name;
+			}
+			return $return;
+		}
+	}
 }

@@ -36,15 +36,21 @@ class ModelsShoutbox
 
 	public function insertMsg()
 	{
-		if (strlen($_SESSION['user']->hash_key) != 32) {
+		if (strlen($_SESSION['USER']['HASH_KEY']) != 32) {
 			$return['text'] = 'Erreur HashKey';
 			$return['type'] = 'danger';
 			return $return;
 		} else {
-			$data['hash_key'] = $_SESSION['user']->hash_key;
+			$data['hash_key'] = $_SESSION['USER']['HASH_KEY'];
 		}
 
-		if (empty($_SESSION['user']->avatar) OR !is_file($_SESSION['user']->avatar)) {
+		$sql = new BDD;
+		$sql->table('TABLE_USERS');
+		$sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']['HASH_KEY']));
+		$sql->queryOne();
+		$user = $sql->data;
+
+		if (empty($user->avatar) OR !is_file($user->avatar)) {
 			$data['avatar'] = DEFAULT_AVATAR;
 		} else {
 			$data['avatar'] = $_SESSION['user']->avatar;

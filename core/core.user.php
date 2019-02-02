@@ -125,11 +125,12 @@ class Users
 			));
 			$sql->queryOne();
 
-			foreach ($sql->data as $k => $v) {
-				//$return[$v->hash_key] = $v;
+			if (!empty($sql->data)) {
+				$return[$sql->data->hash_key] = $sql->data;
+				unset($return[$sql->data->hash_key]->password, $return[$sql->data->hash_key]->hash_key);
+			} else {
+				return (object) array();
 			}
-			$return[$sql->data->hash_key] = $sql->data;
-			unset($return[$sql->data->hash_key]->password, $return[$sql->data->hash_key]->hash_key);
 		} else {
 			return (object) array();
 		}
@@ -137,15 +138,38 @@ class Users
 		return $return;
 
 	}
-#########################################
-# Logout
-#########################################
+	#########################################
+	# Logout
+	#########################################
 	public static function logout()
 	{
 		unset($_SESSION['USER']);
 		setcookie('BEL-CMS-COOKIE', NULL, -1, '/');
 		$return['msg']  = 'Votre session est vos cookie de ce site sont effacés';
 		$return['type'] = 'success';
+		return $return;
+	}
+	#########################################
+	# Verifie si l'utilisateur existe
+	#########################################
+	public static function ifUserExist ($hash_key = null)
+	{
+		$return = false;
+
+		if ($hash_key !== null && strlen($hash_key) == 32) {
+			$sql = New BDD();
+			$sql->table('TABLE_USERS');
+			$sql->where(array(
+				'name'  => 'hash_key',
+				'value' => $hash_key
+			));
+			$sql->count();
+			$return = $sql->data;
+			if (!empty($return)) {
+				$return = true;
+			}
+		}
+
 		return $return;
 	}
 }

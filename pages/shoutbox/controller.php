@@ -16,19 +16,12 @@ if (!defined('CHECK_INDEX')) {
 
 class Shoutbox extends Pages
 {
-	var $models = 'ModelsShoutbox';
-	#####################################
-	# Start Class
-	#####################################
-	public function __construct($id = null)
-	{
-		parent::__construct();
-	}
+	//var $models = 'ModelsShoutbox';
 
 	public function send ()
 	{
 		$return = self::insertMsg();
-		$this->jquery = array('type' => $return['type'], 'text' => $return['text'] );
+		echo json_encode(array('type' => $return['type'], 'text' => $return['text'] ));
 	}
 	public function getLast ()
 	{
@@ -59,41 +52,51 @@ class Shoutbox extends Pages
 			} else {
 				$left_right =  'from_user left';
 			}
-			$username = AutoUser::getNameAvatar($v->hash_key);
+
+			if (!empty($v->hash_key)) {
+				$infosUser = Users::getInfosUser($v->hash_key);
+				$username  = $infosUser[$v->hash_key]->username;
+				$avatar    = empty($infosUser[$v->hash_key]->avatar) ? 'assets/images/default_avatar.jpg' : $infosUser[$v->hash_key]->avatar;
+			} else {
+				$username  = 'Inconnu';
+				$avatar    = 'assets/images/default_avatar.jpg';
+			}
+
 			$msg = ' ' . $v->msg;
 			$msg = preg_replace("#([\t\r\n ])(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*)?)#i", '\1<a href="http://\2.\3" onclick="window.open(this.href); return false;">\2.\3</a>', $msg);
 			$msg = preg_replace("#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $msg);
 			$msg = preg_replace_callback('`((https?|ftp)://\S+)`', 'cesure_href',$msg);
 
 			$return .= '<li class="'.$left_right.'" id="id_'.$v->id.'">
-				<a data-toggle="tooltip" title="'.$username->username.'" href="Members/View/'.$username->username.'" class="avatar">
-					<img src="'.$username->avatar.'">
+				<a data-toggle="tooltip" title="'.$username.'" href="Members/View/'.$username.'" class="avatar">
+					<img src="'.$avatar.'">
 				</a>
 				<div class="message_wrap"> <span class="arrow"></span>
-					<div class="info"> <a data-toggle="tooltip" title="'.$username->username.'" href="Members/View/'.$username->username.'" class="name">'.$username->username.'</a> <span class="time">'.$v->date_msg.'</span>
+					<div class="info"> <a data-toggle="tooltip" title="'.$username.'" href="Members/View/'.$username.'" class="name">'.$username.'</a> <span class="time">'.$v->date_msg.'</span>
 					</div>
 					<div class="text">'.$msg.'</div>
 				</div>
 			</li>';
 		endforeach;
 
-		$this->affiche = $return;
+		echo $return;
 	}
 
 	public function insertMsg()
 	{
-		if (strlen($_SESSION['user']->hash_key) != 32) {
+		if (strlen($_SESSION['USER']['HASH_KEY']) != 32) {
 			$return['text'] = 'Erreur HashKey';
 			$return['type'] = 'danger';
 			return $return;
 		} else {
-			$data['hash_key'] = $_SESSION['user']->hash_key;
+			$data['hash_key'] = $_SESSION['USER']['HASH_KEY'];
 		}
 
-		if (empty($_SESSION['user']->avatar) OR !is_file($_SESSION['user']->avatar)) {
-			$data['avatar'] = DEFAULT_AVATAR;
+		if (!empty($_SESSION['USER']['HASH_KEY'])) {
+			$infosUser = Users::getInfosUser($_SESSION['USER']['HASH_KEY']);
+			$data['avatar'] = empty($infosUser[$_SESSION['USER']['HASH_KEY']]->avatar) ? 'assets/images/default_avatar.jpg' : $infosUser[$_SESSION['USER']['HASH_KEY']]->avatar;
 		} else {
-			$data['avatar'] = $_SESSION['user']->avatar;
+			$data['avatar']    = 'assets/images/default_avatar.jpg';
 		}
 
 		if (empty($_REQUEST['text'])) {

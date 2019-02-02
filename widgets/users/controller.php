@@ -16,11 +16,12 @@ if (!defined('CHECK_INDEX')) {
 
 class WidgetUsers extends Widgets
 {
+	var $models = array('ModelsUsers');
+
 	public function index()
 	{
-		//$d = array();
-		//$d['users'] = array('title' => 'Utilisateur' );
-		//$this->set($d);
+		$d['user'] = $this->ModelsUsers->getInfosUser();
+		$this->set($d);
 		$this->render('index');
 	}
 }

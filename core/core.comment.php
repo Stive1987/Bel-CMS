@@ -93,7 +93,7 @@ final class Comment extends Dispatcher
 			if (isset($this->links[3]) and !empty($this->links[3])) {
 				$links .= $this->links[3];
 			}
-		$html .= '<form action="Comments/Send" method="post" enctype="multipart/form-data"><input name="url" type="hidden" value="'.$links.'"><textarea name="text"></textarea><button type="submit" style="margin: 5px;" class="btn btn-primary">Envoyer</button></form>';
+		$html .= '<form action="Comments/Send" method="post" enctype="multipart/form-data"><input name="url" type="hidden" value="'.$links.'"><textarea class="bel_cms_textarea_simple" name="text"></textarea><button type="submit" style="margin: 5px;" class="btn btn-primary">Envoyer</button></form>';
 		}
 
 		echo $html;

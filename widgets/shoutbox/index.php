@@ -19,33 +19,41 @@ if (!defined('CHECK_INDEX')) {
 			<ul id="bel_cms_widgets_shoutbox_msg">
 				<?php
 				$i = 1;
-				foreach ($shoutbox as $k => $v):
-					if (count($v->msg) != 0):
-					$i++;
-					if ($i & 1) {
-						$left_right =  'by_myself right';
-					} else {
-						$left_right =  'from_user left';
-					}
-					$username = AutoUser::getNameAvatar($v->hash_key);
-					$msg = ' ' . $v->msg;
-					$msg = preg_replace("#([\t\r\n ])(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*)?)#i", '\1<a href="http://\2.\3" onclick="window.open(this.href); return false;">\2.\3</a>', $msg);
-					$msg = preg_replace("#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $msg);
-					$msg = preg_replace_callback('`((https?|ftp)://\S+)`', 'cesure_href',$msg);
-					?>
-					<li class="<?=$left_right?>" id="id_<?=$v->id?>">
-						<a data-toggle="tooltip" title="<?=$username->username?>" href="Members/View/<?=$username->username?>" class="avatar">
-							<img src="<?=$username->avatar?>">
-						</a>
-						<div class="message_wrap"> <span class="arrow"></span>
-							<div class="info"> <a data-toggle="tooltip" title="<?=$username->username?>" href="Members/View/<?=$username->username?>" class="name"><?=$username->username?></a> <span class="time"><?=$v->date_msg?></span>
+				if (count($shoutbox) != 0):
+					foreach ($shoutbox as $k => $v):
+						$i++;
+						if ($i & 1) {
+							$left_right =  'by_myself right';
+						} else {
+							$left_right =  'from_user left';
+						}
+						if (!empty($v->hash_key)) {
+							$infosUser = Users::getInfosUser($v->hash_key);
+							$username  = $infosUser[$v->hash_key]->username;
+							$avatar    = empty($infosUser[$v->hash_key]->avatar) ? 'assets/images/default_avatar.jpg' : $infosUser[$v->hash_key]->avatar;
+						} else {
+							$username  = 'Inconnu';
+							$avatar    = 'assets/images/default_avatar.jpg';
+						}
+
+						$msg = ' ' . $v->msg;
+						$msg = preg_replace("#([\t\r\n ])(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*)?)#i", '\1<a href="http://\2.\3" onclick="window.open(this.href); return false;">\2.\3</a>', $msg);
+						$msg = preg_replace("#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $msg);
+						$msg = preg_replace_callback('`((https?|ftp)://\S+)`', 'cesure_href',$msg);
+						?>
+						<li class="<?=$left_right?>" id="id_<?=$v->id?>">
+							<a data-toggle="tooltip" title="<?=$username?>" href="Members/View/<?=$username?>" class="avatar">
+								<img src="<?=$avatar?>">
+							</a>
+							<div class="message_wrap"> <span class="arrow"></span>
+								<div class="info"> <a data-toggle="tooltip" title="<?=$username?>" href="Members/View/<?=$username?>" class="name"><?=$username?></a> <span class="time"><?=$v->date_msg?></span>
+								</div>
+								<div class="text"><?=$msg?></div>
 							</div>
-							<div class="text"><?=$msg?></div>
-						</div>
-					</li>
-					<?php
-					endif;
-				endforeach;
+						</li>
+						<?php
+					endforeach;
+				endif;
 				?>
 			</ul>
 		</div>
@@ -53,7 +61,7 @@ if (!defined('CHECK_INDEX')) {
 	if (Users::isLogged()):
 	?>
 	<div class="card-footer text-muted">
-		<form id="bel_cms_widgets_shoutbox_form" action="shoutbox/send&ajax" method="post">
+		<form id="bel_cms_widgets_shoutbox_form" action="shoutbox/send&json" method="post">
 			<div class="form-group" style="position: relative;">
 				<input type="text" class="form-control" name="text" placeholder="Votre Message...">
 			</div>

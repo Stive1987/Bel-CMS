@@ -45,10 +45,7 @@ class Pages
 	function set ($d) {
 		$this->vars = array_merge($this->vars,$d);
 	}
-	function internManagement ($d = false)
-	{
-		$this->internManagement = $d;
-	}
+
 	public function pageActive ($name)
 	{
 		$sql = New BDD();

@@ -15,40 +15,41 @@ if (!defined('CHECK_INDEX')) {
 }
 if (isset($_SESSION['LOGIN_MANAGEMENT']) && $_SESSION['LOGIN_MANAGEMENT'] === true):
 ?>
-<div class="col-md-12">
-	<div class="panel panel-white">
-		<div class="panel-heading clearfix">
-			<h4 class="panel-title"><?=BLOG?></h4>
-		</div>
-		<div class="panel-body basic-form-panel">
-			<form action="/blog/sendnew?management&page=true" method="post" class="form-horizontal">
+<div class="row">
+	<div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="block">
+            <div class="block-title">
+                <h2>Nouveau <?=BLOG?></h2>
+            </div>
+			<form action="/blog/sendnew?management&page=true" method="post" class="form-horizontal form-bordered">
 				<div class="form-group">
-					<label for="input-Default" class="col-sm-2 control-label"><?=NAME?></label>
-					<div class="col-sm-10">
-						<input name="name" type="text" class="form-control" id="input-Default" value="">
+					<label class="col-sm-3 control-label" for="checkbox"><?=NAME?></label>
+					<div class="col-sm-9">
+						<input name="name" type="text" class="form-control" value="">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Tags</label>
-					<div class="col-sm-10">
-						<input name="tags" type="text" value="" data-role="tagsinput" class="form-control">
-						<p class="help-block">(séparer par des ",")</p>
+					<label class="col-sm-3 control-label" for="checkbox">Tags</label>
+					<div class="col-sm-9">
+						<input name="tags" placeholder="( séparer par des => , )" type="text" class="form-control">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label"><?=TEXT?></label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 control-label" for="checkbox"><?=TEXT?></label>
+					<div class="col-sm-9">
 						<textarea class="bel_cms_textarea_full" name="content"></textarea>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label"><?=COMPLEMENT?></label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 control-label" for="checkbox"><?=COMPLEMENT?></label>
+					<div class="col-sm-9">
 						<textarea class="bel_cms_textarea_full" name="additionalcontent"></textarea>
 					</div>
 				</div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-primary"><?=ADD?></button>
+				<div class="form-group form-actions">
+					<div class="col-sm-9 col-sm-offset-3">
+						<button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> <?=SAVE?></button>
+					</div>
 				</div>
 			</form>
 		</div>

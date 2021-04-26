@@ -24,14 +24,20 @@ class Shoutbox extends AdminPages
 		$data['data'] = $this->ModelsShoutbox->getAllMsg();
 		$data['count'] = $this->ModelsShoutbox->getNbMsg();
 		$this->set($data);
-		$this->render('index');
+		$menu[] = array('Accueil'=> array('href'=>'/shoutbox?management&widgets=true','icon'=>'fa fa-home'));
+		$menu[] = array('Configuration'=> array('href'=>'/shoutbox/parameter?management&widgets=true','icon'=>'fa fa-cubes'));
+		$menu[] = array('Effacer tout'=> array('href'=>'/shoutbox/deleteall?management&widgets=true','icon'=>'fa fa-ban'));
+		$this->render('index', $menu);
 	}
 
 	public function edit ($id)
 	{
 		$data['data'] = $this->ModelsShoutbox->getMsg($id);
 		$this->set($data);
-		$this->render('edit');
+		$menu[] = array('Accueil'=> array('href'=>'/shoutbox?management&widgets=true','icon'=>'fa fa-home'));
+		$menu[] = array('Configuration'=> array('href'=>'/shoutbox/parameter?management&widgets=true','icon'=>'fa fa-cubes'));
+		$menu[] = array('Effacer tout'=> array('href'=>'/shoutbox/deleteall?management&widgets=true','icon'=>'fa fa-ban'));
+		$this->render('edit', $menu);
 	}
 
 	public function sendedit ()
@@ -61,7 +67,10 @@ class Shoutbox extends AdminPages
 		$data['config'] = BelCMSConfig::GetConfigWidgets(get_class($this));
 		$data['pages']  = Common::ScanDirectory(DIR_PAGES, true);
 		$this->set($data);
-		$this->render('parameter');
+		$menu[] = array('Accueil'=> array('href'=>'/shoutbox?management&widgets=true','icon'=>'fa fa-home'));
+		$menu[] = array('Configuration'=> array('href'=>'/shoutbox/parameter?management&widgets=true','icon'=>'fa fa-cubes'));
+		$menu[] = array('Effacer tout'=> array('href'=>'/shoutbox/deleteall?management&widgets=true','icon'=>'fa fa-ban'));
+		$this->render('parameter', $menu);
 	}
 
 	public function sendparameter ()

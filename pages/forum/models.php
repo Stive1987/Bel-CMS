@@ -14,7 +14,7 @@ if (!defined('CHECK_INDEX')) {
 	exit(ERROR_INDEX);
 }
 
-###  TABLE_FORUM
+###  TABLE_NEWSLETTER
 ###  TABLE_FORUM_POST
 ###  TABLE_FORUM_POSTS
 ###  TABLE_FORUM_THREADS
@@ -471,6 +471,9 @@ class ModelsForum
 		$insert['date_post']  = date("Y-m-d H:i:s");
 		$insert['attachment'] = '';
 		$insert['content']    = Common::VarSecure(trim($data['content']));
+		if ($insert['content'] == '') {
+			$insert['content'] = 'null';
+		}
 		# insert en BDD
 		$sql = New BDD();
 		$sql->table('TABLE_FORUM_POST');

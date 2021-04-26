@@ -16,30 +16,40 @@ if (!defined('CHECK_INDEX')) {
 # TABLE_INTERACTION
 final class Interaction
 {
-	function __construct()
-	{
-		$this->user = $_SESSION['USER']['HASH_KEY'];
-	}
+	private $user,
+			$type,
+			$text,
+			$title,
+			$date;
 
 	public function user ($hash_key = null) {
-		if ($user !== null && strlen($hash_key) == 32) {
-			$this->user = $user;
+		if ($hash_key !== null && strlen($hash_key) == 32) {
+			$this->user = $hash_key;
+		} else {
+			$this->user = false;
 		}
 	}
 
 	public function type ($type = 'infos')
 	{
-		if ($type == 'infos') {
-			$this->type = 'infos';
-		} else if ($type == 'error') {
-			$this->type = 'error';
-		} else if ($type == 'success') {
-			$this->type = 'success';
-		} else if ($type == 'warning') {
-			$this->type = 'warning';
-		} else {
-			$this->type = 'error';
+		switch ($type) {
+			case 'infos':
+				$type = 'infos';
+			break;
+			case 'error':
+				$type = 'error';
+			break;
+			case 'success':
+				$type = 'success';
+			break;
+			case 'warning':
+				$type = 'warning';
+			break;
+			default:
+				$type = 'error';
+			break;
 		}
+		$this->type = $type;
 	}
 
 	public function text ($text = null)
@@ -47,9 +57,14 @@ final class Interaction
 		$this->text = Common::VarSecure($text, 'html');
 	}
 
-	public function date ($date = null)
+	private function date ()
 	{
 		$this->date = date("Y-m-d H:i:s");
+	}
+
+	public function title ($text)
+	{
+		$this->title = Common::VarSecure($text, '');
 	}
 
 	public function insert ()
@@ -59,6 +74,7 @@ final class Interaction
 		$insert['type']   = $this->type;
 		$insert['text']   = $this->text;
 		$insert['date']   = $this->date;
+		$insert['title']  = $this->title;
 		/* BDD */
 		$sql = New BDD();
 		$sql->table('TABLE_INTERACTION');
@@ -66,7 +82,7 @@ final class Interaction
 		$sql->insert();
 	}
 
-	public function get ()
+	public static function get ()
 	{
 		$sql = New BDD();
 		$sql->table('TABLE_INTERACTION');

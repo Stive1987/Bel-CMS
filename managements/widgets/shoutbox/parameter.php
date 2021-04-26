@@ -15,25 +15,13 @@ if (!defined('CHECK_INDEX')) {
 }
 if (isset($_SESSION['LOGIN_MANAGEMENT']) && $_SESSION['LOGIN_MANAGEMENT'] === true):
 ?>
-<form action="/shoutbox/sendparameter?management&widgets=true" method="post" class="form-horizontal">
-<div class="x_panel">
-	<div class="x_title">
-		<h2>Menu Widgets Shoutbox</h2>
-		<div class="clearfix"></div>
-	</div>
-	<div class="x_content">
-		<a href="/shoutbox?management&widgets=true" class="btn btn-app">
-			<i class="fa fas fa-home"></i> Accueil
-		</a>
-		<button type="submit" class="btn btn-app">
-			<i class="fa fa-save"></i> <?=SAVE?>
-		</button>
-	</div>
-</div>
-
-<div class="col-md-12">
-	<div class="panel panel-white">
-		<div class="panel-body">
+<div class="row">
+	<div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="block">
+            <div class="block-title">
+                <h2>Paramètres Shoutbox</h2>
+            </div>
+			<form action="/shoutbox/sendparameter?management&widgets=true" method="post" class="form-horizontal form-bordered">
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Page Activer</label>
 					<div class="col-sm-10">
@@ -175,6 +163,11 @@ if (isset($_SESSION['LOGIN_MANAGEMENT']) && $_SESSION['LOGIN_MANAGEMENT'] === tr
 							<?php
 						endforeach;
 						?>
+					</div>
+				</div>
+				<div class="form-group form-actions">
+					<div class="col-sm-9 col-sm-offset-3">
+						<button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> <?=SAVE?></button>
 					</div>
 				</div>
 		</div>

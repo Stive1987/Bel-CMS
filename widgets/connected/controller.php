@@ -18,19 +18,8 @@ class WidgetConnected extends Widgets
 {
 	var $models = array('ModelsConnected');
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
-
 	public function index ()
 	{
-		/*
-		$d = array();
-		$d['data'] = $this->data;
-		$this->set($d);
-		*/
 		$this->render('index');
 	}
 }

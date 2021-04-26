@@ -75,6 +75,20 @@ class ModelsBlog
 	public function sendEdit ($data = false)
 	{
 		if ($data !== false) {
+			if (empty($data['name'])) {
+				$return = array(
+					'type' => 'error',
+					'text' => ADD_BLOG_EMPTY
+				);
+				return $return;
+			}
+			if (empty($data['content'])) {
+				$return = array(
+					'type' => 'error',
+					'text' => ADD_BLOG_EMPTY_CONTENT
+				);
+				return $return;
+			}
 			// SECURE DATA
 			$edit['rewrite_name']      = Common::MakeConstant($data['name']);
 			$edit['name']              = Common::VarSecure($data['name'], ''); // autorise que du texte
@@ -116,6 +130,20 @@ class ModelsBlog
 
 	public function sendnew ($data = false)
 	{
+		if (empty($data['name'])) {
+			$return = array(
+				'type' => 'error',
+				'text' => ADD_BLOG_EMPTY
+			);
+			return $return;
+		}
+		if (empty($data['content'])) {
+			$return = array(
+				'type' => 'error',
+				'text' => ADD_BLOG_EMPTY_CONTENT
+			);
+			return $return;
+		}
 		if ($data !== false) {
 			// SECURE DATA
 			$send['rewrite_name']      = Common::MakeConstant($data['name']);

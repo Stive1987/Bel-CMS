@@ -17,7 +17,8 @@ if (!defined('CHECK_INDEX')) {
 class AdminPages
 {
 	var $active;
-	var $vars = array();
+	var $vars  = array();
+	var $admin = false;
 
 	public $render = null;
 
@@ -27,6 +28,10 @@ class AdminPages
 
 		if ($this->active === false) {
 			self::pageOff();
+		} else if ($this->admin === true) {
+			if (Users::isSuperAdmin() === false) {
+				self::superAdmin();
+			}	
 		}
 
 		if (isset($this->models)){
@@ -52,6 +57,34 @@ class AdminPages
 		return;
 	}
 	#########################################
+	# Page uniquement au admin supreme (grp 1)
+	#########################################
+	private function superAdmin ()
+	{
+		ob_start();
+		?>
+		<div id="page-content">
+
+		    <div class="content-header">
+		        <ul class="nav-horizontal text-center">
+		        	<?php
+		Notification::error('La page demander n\'est accesible qu\'aux administrateur suprême', 'Page');
+
+		$this->render = ob_get_contents();
+
+		if (ob_get_length() != 0) {
+			ob_end_clean();
+		}
+		?>
+		        </ul>
+		    </div>
+		    <ul class="breadcrumb breadcrumb-top">
+		        <li>Index</li>
+		    </ul>
+		<?php	
+		return;
+	}
+	#########################################
 	# Enregsitre les variables dans vars
 	#########################################
 	function set ($d) {
@@ -60,10 +93,17 @@ class AdminPages
 	#########################################
 	# Rendu de la page demander
 	#########################################
-	public function render ($filename)
+	public function render ($filename, $menu = array())
 	{
 		extract($this->vars);
 		ob_start();
+
+		if ($this->admin === true) {
+			if (Users::isSuperAdmin() === false) {
+				self::superAdmin();
+				return;
+			}
+		}
 
 		if (isset($_REQUEST['page']) and $_REQUEST['page'] == true) {
 			$filename = MANAGEMENTS.'pages'.DS.strtolower(get_class($this)).DS.$filename.'.php';
@@ -74,7 +114,28 @@ class AdminPages
 		} else if (isset($_REQUEST['gaming']) && $_REQUEST['gaming'] == true) {
 			$filename = MANAGEMENTS.'gaming'.DS.strtolower(get_class($this)).DS.$filename.'.php';
 		}
-		
+
+		?>
+		<div id="page-content">
+		    <div class="content-header">
+		        <ul class="nav-horizontal text-center">
+		        	<?php
+		        	foreach ($menu as $k => $v) {
+		        		foreach ($v as $key => $value) {
+		        		?>
+			            <li class="active">
+			                <a href="<?=$value['href']?>"><i class="<?=$value['icon']?>"></i> <?=$key?></a>
+			            </li>
+			            <?php
+		        		}  		
+		        	}
+		        	?>
+		        </ul>
+		    </div>
+		    <ul class="breadcrumb breadcrumb-top">
+		        <li>Index</li>
+		    </ul>
+		<?php		
 		if (is_file($filename)) {
 			require $filename;
 		} else {
@@ -82,7 +143,9 @@ class AdminPages
 		}
 
 		$this->render = ob_get_contents();
-
+		?>
+		</div>
+		<?php
 		if (ob_get_length() != 0) {
 			ob_end_clean();
 		}
@@ -134,8 +197,17 @@ class AdminPages
 	function error ($title, $msg, $type)
 	{
 		ob_start();
+		?>
+		<div id="page-content">
+			<ul class="breadcrumb breadcrumb-top">
+				<li>Index</li>
+			</ul>
+		<?php
 		Notification::$type($msg, $title);
 		$this->render = ob_get_contents();
+		?>
+		</div>
+		<?php
 		ob_end_clean();
 	}
 	#########################################

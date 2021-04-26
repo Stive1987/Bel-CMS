@@ -1,30 +1,10 @@
-<form action="/Forum/send?management&page=true" method="post" class="form-horizontal">
-<div class="x_panel">
-	<div class="x_title">
-		<h2>Menu Page Forum</h2>
-		<div class="clearfix"></div>
-	</div>
-	<div class="x_content">
-		<a href="/Forum?management&page=true" class="btn btn-app">
-			<i class="fa fas fa-home"></i> Accueil
-		</a>
-		<a href="Forum/parameter?management&page=true" class="btn btn-app">
-			<i class="fa fas fa-cogs"></i> Configuration
-		</a>
-		<a href="/Forum/category?management&page=true" class="btn btn-app">
-			<i class="fa far fa-plus-square"></i> <?=CATEGORY?>
-		</a>
-		<button type="submit" class="btn btn-app">
-			<i class="fa far fa-edit"></i> <?=EDIT?>
-		</button>
-	</div>
-</div>
-<div class="col-md-12">
-	<div class="panel panel-white">
-		<div class="panel-heading clearfix">
-			<h4 class="panel-title"><?=FORUM?></h4>
-		</div>
-		<div class="panel-body basic-form-panel">
+<div class="row">
+	<div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="block">
+            <div class="block-title">
+                <h2>Edition <?=CATEGORY?></h2>
+            </div>
+			<form action="/Forum/send?management&page=true" method="post" class="form-horizontal form-bordered">
 				<div class="form-group">
 					<label for="input-title" class="col-sm-2 control-label"><?=TITLE?></label>
 					<div class="col-sm-10">
@@ -103,10 +83,13 @@
 							</div>
 					</div>
 				</div>
-				<div class="form-actions">
-					<input type="hidden" name="send" value="addcat">
+				<div class="form-group form-actions">
+					<div class="col-sm-9 col-sm-offset-3">
+						<input type="hidden" name="send" value="addcat">
+						<button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> <?=SAVE?></button>
+					</div>
 				</div>
+			</form>
 		</div>
 	</div>
 </div>
-</form>

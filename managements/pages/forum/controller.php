@@ -23,21 +23,33 @@ class Forum extends AdminPages
 	{
 		$data['data'] = $this->ModelsForum->GetThreads();
 		$this->set($data);
-		$this->render('index');
+		$menu[] = array('Accueil'=> array('href'=>'/Forum?management&page=true','icon'=>'fa fa-home'));
+		$menu[] = array('Configuration'=> array('href'=>'/Forum/parameter?management&page=true','icon'=>'fa fa-cubes'));
+		$menu[] = array(CATEGORY=> array('href'=>'/Forum/category?management&page=true','icon'=>'fa fa-th-large'));
+		$menu[] = array(ADD=> array('href'=>'/Forum/AddForum?management&page=true','icon'=>'fa fa-plus'));
+		$this->render('index', $menu);
 	}
 
 	public function category ()
 	{
 		$data['data'] = $this->ModelsForum->GetForum();
 		$this->set($data);
-		$this->render('category');
+		$menu[] = array('Accueil'=> array('href'=>'/Forum?management&page=true','icon'=>'fa fa-home'));
+		$menu[] = array('Configuration'=> array('href'=>'/Forum/parameter?management&page=true','icon'=>'fa fa-cubes'));
+		$menu[] = array(CATEGORY=> array('href'=>'/Forum/category?management&page=true','icon'=>'fa fa-th-large'));
+		$menu[] = array(ADD=> array('href'=>'/Forum/addcategory?management&page=true','icon'=>'fa fa-plus'));
+		$this->render('category', $menu);
 	}
 
 	public function addcategory ()
 	{
 		$data['groups'] = BelCMSConfig::getGroups();
 		$this->set($data);
-		$this->render('addcategory');
+		$menu[] = array('Accueil'=> array('href'=>'/Forum?management&page=true','icon'=>'fa fa-home'));
+		$menu[] = array('Configuration'=> array('href'=>'/Forum/parameter?management&page=true','icon'=>'fa fa-cubes'));
+		$menu[] = array(CATEGORY=> array('href'=>'/Forum/category?management&page=true','icon'=>'fa fa-th-large'));
+		$menu[] = array(ADD=> array('href'=>'/Forum/addcategory?management&page=true','icon'=>'fa fa-plus'));
+		$this->render('addcategory', $menu);
 	}
 
 	public function editCat ($id)
@@ -69,7 +81,10 @@ class Forum extends AdminPages
 	{
 		$data['data'] = $this->ModelsForum->GetForum();
 		$this->set($data);
-		$this->render('addforum');
+		$menu[] = array('Accueil'=> array('href'=>'/Forum?management&page=true','icon'=>'fa fa-home'));
+		$menu[] = array('Configuration'=> array('href'=>'/Forum/parameter?management&page=true','icon'=>'fa fa-cubes'));
+		$menu[] = array(CATEGORY=> array('href'=>'/Forum/category?management&page=true','icon'=>'fa fa-th-large'));
+		$this->render('addforum', $menu);
 	}
 
 	public function editForum($id)
@@ -100,6 +115,7 @@ class Forum extends AdminPages
 		} elseif ($_POST['send'] == 'editcat') {
 			$return = $this->ModelsForum->sendEditCat($_POST);
 			Common::Redirect('Forum/category?management&page=true', 2);
+			$this->error(get_class($this), $return['text'], $return['type']);
 			return;
 		}
 
@@ -120,7 +136,11 @@ class Forum extends AdminPages
 		$data['groups'] = BelCMSConfig::getGroups();
 		$data['config'] = BelCMSConfig::GetConfigPage(get_class($this));
 		$this->set($data);
-		$this->render('parameter');
+		$menu[] = array('Accueil'=> array('href'=>'/Forum?management&page=true','icon'=>'fa fa-home'));
+		$menu[] = array('Configuration'=> array('href'=>'/Forum/parameter?management&page=true','icon'=>'fa fa-cubes'));
+		$menu[] = array(CATEGORY=> array('href'=>'/Forum/category?management&page=true','icon'=>'fa fa-th-large'));
+		$menu[] = array(ADD=> array('href'=>'/Forum/AddForum?management&page=true','icon'=>'fa fa-plus'));
+		$this->render('parameter', $menu);
 	}
 
 	public function sendparameter ()

@@ -18,14 +18,17 @@ Common::constant(array(
 	#####################################
 	# Fichier lang en français - Pages
 	#####################################
-	'BLOG'      => 'Blog',
-	'COMMENTS'  => 'Commentaires',
-	'DOWNLOADS' => 'Téléchargements',
-	'FORUM'     => 'Forum',
-	'SHOUTBOX'  => 'T\'chat',
-	'TEAM'      => 'Team',
-	'USER'      => 'Utilisateurs',
-	'TEAM'      => 'Équipes',
-	'MAINTENANCE' => 'Maintenance',
-	'REGISTRATION'=> 'Gestions des inscriptions',
+	'BLOG'         => 'Blog',
+	'COMMENTS'     => 'Commentaires',
+	'DOWNLOADS'    => 'Téléchargements',
+	'FORUM'        => 'Forum',
+	'SHOUTBOX'     => 'T\'chat',
+	'TEAM'         => 'Team',
+	'USER'         => 'Utilisateurs',
+	'TEAM'         => 'Équipes',
+	'MAINTENANCE'  => 'Maintenance',
+	'REGISTRATION' => 'Gestions des membres',
+	'THEMES'       => 'Gestions des Thèmes',
+	'NEWSLETTER'   => 'Newsletter',
+	'SURVEY'       => 'Sondage',
 ));

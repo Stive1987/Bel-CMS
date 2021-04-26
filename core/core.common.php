@@ -80,6 +80,13 @@ final class Common
 		}
 		return $return;
 	}
+
+	public static function RemoveAccents ($chaine = '')
+	{
+         return strtr($chaine,
+         	"ÀÁÂàÄÅàáâàäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏ" ."ìíîïÙÚÛÜùúûüÿÑñ", "aaaaaaaaaaaaooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn");
+	}
+
 	#########################################
 	# Redirect
 	#########################################
@@ -143,7 +150,7 @@ final class Common
 				while (($file = readdir($dh)) !== false) {
 					if ($file != '.' && $file != '..') {
 						if ($ext) {
-							$fileExt = substr ($file, -3);
+							$fileExt = substr ($file, -4);
 							if (is_array($ext)) {
 								if (array_search($fileExt, $ext)) {
 									$return[] = ($full_access) ? $dir.$file : $file;
@@ -250,7 +257,8 @@ final class Common
 		} else if (CMS_WEBSITE_LANG == DEUTCH) {
 			$lg = 'de_DE';
 		}
-		$d = strtoupper($d); $t = strtoupper($t);
+
+		$d    = strtoupper($d); $t = strtoupper($t);
 		$date = str_replace('/', '-', $date);
 		$date = new DateTime($date);
 
@@ -310,19 +318,19 @@ final class Common
 			$return = new IntlDateFormatter($lg, IntlDateFormatter::FULL, IntlDateFormatter::FULL);
 		} else if ($d == 'SQLDATE') {
 			$return = new IntlDateFormatter(
-				'en_US',
+				$lg,
 				IntlDateFormatter::FULL,
 				IntlDateFormatter::FULL,
-				'America/Los_Angeles',
+				'Europe/Brussels',
 				IntlDateFormatter::GREGORIAN,
 				'yyyy-MM-dd'
 			);
 		} else if ($d == 'SQLDATETIME') {
 			$return = new IntlDateFormatter(
-				'en_US',
+				$lg,
 				IntlDateFormatter::FULL,
 				IntlDateFormatter::FULL,
-				'America/Los_Angeles',
+				'Europe/Brussels',
 				IntlDateFormatter::GREGORIAN,
 				'yyyy-MM-dd hh-mm-ss'
 			);
@@ -401,7 +409,7 @@ final class Common
 	#########################################
 	public static function VarSecure ($data = null, $authorised = 'html') {
 		$return = null;
-		$base_html = '<p><hr><em><big><a><b><u><s><i><div><img><pre><br><ul><li><ol><tr><th><table><tbody><thead><tfoot><colgroup><span><strong><blockquote><iframe><font><h1><h2><h3><h4><h5><h6><font><sup><sub>';
+		$base_html = '<p><hr><em><big><a><b><u><s><i><div><img><pre><br><ul><li><ol><tr><td><th><table><tbody><thead><tfoot><colgroup><span><strong><blockquote><iframe><font><h1><h2><h3><h4><h5><h6><font><sup><sub><section><article><button><figure><form><input><video><code>';
 
 		if ($authorised == 'html') {
 			$authorised = $base_html;
@@ -490,6 +498,17 @@ final class Common
 
 		return $return;
 	}
+	#########################################
+	# Request ID hash_key
+	#########################################
+	public static function hash_key ($data = false) {
+		if ($data) {
+			if (ctype_alnum($data) && strlen($data) == 32) {
+				return true;
+			} else return false;
+		}
+	}
+
 	#########################################
 	# Check exist page
 	#########################################

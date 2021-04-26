@@ -22,7 +22,7 @@ Common::constant(array(
 	'EDIT_BLOG_ERROR'         => 'Erreur d\'edition',
 	'ERROR_NO_DATA'           => 'Erreur de transfert de données',
 	'BLOG'                    => 'Blog',
-	'COMPLEMENT'              => 'Complèmennt',
+	'COMPLEMENT'              => 'Complément',
 	'NB_BLOG'                 => 'Nombre de blog',
 	'ERROR_NO_NUM'            => 'Erreur le texte rentrer n\'est pas du numerique',
 	'EDIT_BLOG_PARAM_SUCCESS' => 'les paramètres du blog sont sauvegarder avec succès',
@@ -31,4 +31,6 @@ Common::constant(array(
 	'SEND_BLOG_ERROR'         => 'La page n\'a pas pu etre ajouté : erreur BDD',
 	'DEL_BLOG_SUCCESS'        => 'La page du blog à été supprimé avec succès',
 	'DEL_BLOG_ERROR'          => 'Erreur durant la suppression du blog',
+	'ADD_BLOG_EMPTY'          => 'Le nom ne peux-être vide',
+	"ADD_BLOG_EMPTY_CONTENT"  => 'Le contenue ne peux-être vide',
 ));

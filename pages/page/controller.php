@@ -17,21 +17,60 @@ if (!defined('CHECK_INDEX')) {
 class Page extends Pages
 {
 	var $models  = array('ModelsPage');
-	private $php = true;
 
 	public function index ($page = false)
+	{	
+		$set['data'] = $this->ModelsPage->getPage();
+		foreach ($set['data'] as $k => $v) {
+			if (Secures::IsAcess($v->groups) == false) {
+				unset($set['data'][$k]);
+			}
+		}
+		$page = Common::ScanFiles(ROOT.'pages/page/sub-page');
+		if (!empty($page)) {
+			$set['sub'] = str_replace(".php", "", $page);
+		}
+		$this->set($set);
+		$this->render('index');
+	}
+
+	public function read ($id = null)
 	{
-		if (!empty($page) && $this->ModelsPage->TestExistPage($page) === true) {
-			$data['title']   = Common::MakeConstant($page);
-			$data['content'] = $this->ModelsPage->GetPage($page, $this->php)->content;
-			$this->set($data);
-			$this->render('index');
+		if (!is_null($id) && is_numeric($id)) {
+			$set['data'] = $this->ModelsPage->getPageContentId($id);
+			$get = $this->ModelsPage->getPageId($set['data']->number);
+			if (Secures::IsAcess($get->groups) == false) {
+				$this->error(get_class($this), NO_ACCESS_GROUP_PAGE, 'error');
+			} else {
+				$this->set($set);
+				$this->render('read');	
+			}
 		} else {
-			$this->error(INFO, 'La page demander n\'existe pas !', 'warning');
+			$this->error(get_class($this), 'Aucun ID', 'warning');
 		}
 	}
 
-	public function subPage ($name = null)
+	public function subpage ($id)
+	{
+		if (!is_null($id) && is_numeric($id)) {
+			$set['data'] = $this->ModelsPage->getPages($id);
+			if (empty($set['data'])) {
+				Notification::warning('Aucune page dans la BDD');
+			} else {
+				$get = $this->ModelsPage->getPageId(current($set['data'])->number);
+				if (Secures::IsAcess($get->groups) == false) {
+					$this->error(get_class($this), NO_ACCESS_GROUP_PAGE, 'error');
+				} else {
+					$this->set($set);
+					$this->render('subpage');
+				}
+			}
+		} else {
+			$this->error(get_class($this), 'Aucun ID', 'warning');
+		}
+	}
+
+	public function intern ($name = null)
 	{
 		$page = Common::ScanFiles(ROOT.'pages/page/sub-page');
 		if (!empty($page)) {
@@ -41,7 +80,7 @@ class Page extends Pages
 		if (in_array(strtolower($name), $page)) {
 			require_once(ROOT.'pages/page/sub-page'.DS.$name.'.php');
 		} else {
-			$this->error(INFO, 'La page ('.$name.') demander n\'existe pas !', 'warning');
+			$this->error(get_class($this), 'La page ('.$name.') demander n\'existe pas !', 'warning');
 		}
 	}
 }

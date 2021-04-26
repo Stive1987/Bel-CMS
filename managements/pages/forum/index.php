@@ -1,29 +1,28 @@
-<div class="x_panel">
-	<div class="x_title">
-		<h2>Menu Page Forum</h2>
-		<div class="clearfix"></div>
-	</div>
-	<div class="x_content">
-		<a href="/Forum?management&page=true" class="btn btn-app">
-			<i class="fa fas fa-home"></i> Accueil
-		</a>
-		<a href="Forum/parameter?management&page=true" class="btn btn-app">
-			<i class="fa fas fa-cogs"></i> Configuration
-		</a>
-		<a href="/Forum/category?management&page=true" class="btn btn-app">
-			<i class="fa far fa-plus-square"></i> <?=CATEGORY?>
-		</a>
-		<a href="/Forum/AddForum?management&page=true" class="btn btn-app">
-			<i class="fa fas fa-plus"></i> <?=ADD?>
-		</a>
-	</div>
-</div>
+<?php
+/**
+ * Bel-CMS [Content management system]
+ * @version 1.0.0
+ * @link https://bel-cms.be
+ * @link https://determe.be
+ * @license http://opensource.org/licenses/GPL-3.-copyleft
+ * @copyright 2014-2019 Bel-CMS
+ * @author as Stive - stive@determe.be
+ */
 
-<div class="col-md-12">
-	<div class="panel panel-white">
-		<div class="panel-body">
+if (!defined('CHECK_INDEX')) {
+	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
+	exit(ERROR_INDEX);
+}
+?>
+<div class="row">
+	<div class="col-lg-12 col-md-12 col-sm-12">
+		<div class="block full">
+		    <div class="block-title">
+		        <h2><strong>Menu page</strong> forum</h2>
+		    </div>
+			<div class="table-responsive">
 			<!-- fin des boutton action -->
-			<table id="datatableblog" class="table table-striped jambo_table bulk_action">
+			<table  class="DataTableBelCMS table table-vcenter table-condensed table-bordered">
 				<thead>
 					<tr>
 						<th><?=ICON?></th>
@@ -85,44 +84,6 @@
 					?>
 				</tbody>
 			</table>
-			<button class="btn" onclick="window.location.href='/Forum/AddForum?management&page=true'"><i class="icon-plus"></i> <?=ADD?></button>
 		</div>
 	</div>
 </div>
-<script src="/assets/plugins/jquery-3.3.1/jquery-3.3.1.min.js"></script>
-<script src="/managements/assets/datatables/js/jquery.datatables.min.js"></script>
-<script>
-	(function($){
-		$('#datatableblog').dataTable( {
-			"language": {
-				"sProcessing":     "Traitement en cours...",
-				"sSearch":         "Rechercher&nbsp;:",
-				"sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
-				"sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-				"sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
-				"sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-				"sInfoPostFix":    "",
-				"sLoadingRecords": "Chargement en cours...",
-				"sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
-				"sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
-				"oPaginate": {
-					"sFirst":      "Premier",
-					"sPrevious":   "Pr&eacute;c&eacute;dent",
-					"sNext":       "Suivant",
-					"sLast":       "Dernier"
-				},
-				"oAria": {
-					"sSortAscending":  ": activer pour trier la colonne par ordre croissant",
-					"sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
-				},
-				"select": {
-						"rows": {
-							_: "%d lignes séléctionnées",
-							0: "Aucune ligne séléctionnée",
-							1: "1 ligne séléctionnée"
-						} 
-				}
-			}
-		} );
-	})(jQuery);
-</script>
